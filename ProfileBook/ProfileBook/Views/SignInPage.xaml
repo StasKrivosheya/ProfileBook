@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="ProfileBook.Views.SignInPage"
+             Title="{Binding Title}">
+
+    <StackLayout Padding="40">
+        <StackLayout VerticalOptions="CenterAndExpand">
+            <Entry Placeholder="Login" Text="{Binding Login}" />
+            <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
+        </StackLayout>
+        <StackLayout VerticalOptions="CenterAndExpand">
+            <Button Text="sign in"
+                    BackgroundColor="DarkOrange"
+                    BorderColor="Black"
+                    BorderWidth="1" 
+                    IsEnabled="{Binding IsButtonEnabled}"/>
+            <Label HorizontalOptions="CenterAndExpand" Margin="10, 0">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="SIGN UP" TextColor="Blue" TextDecorations="Underline">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavigateCommand}"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>
