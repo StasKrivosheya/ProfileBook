@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using Acr.UserDialogs;
 using Prism.Navigation;
 using Xamarin.Forms;
 
@@ -22,14 +23,12 @@ namespace ProfileBook.ViewModels
         private readonly INavigationService _navigationService;
 
         private DelegateCommand _navigateCommand;
-
         public DelegateCommand NavigateCommand =>
             _navigateCommand ?? (_navigateCommand = new DelegateCommand(ExecuteNavigationCommand));
 
-        async void ExecuteNavigationCommand()
-        {
-            await _navigationService.NavigateAsync("SignUpPage");
-        }
+        private DelegateCommand _signInCommand;
+        public DelegateCommand SignInCommand =>
+            _signInCommand ?? (_signInCommand = new DelegateCommand(ExecuteSignInCommand));
 
         private bool _isButtonEnabled;
         public bool IsButtonEnabled
@@ -64,6 +63,16 @@ namespace ProfileBook.ViewModels
         {
             IsButtonEnabled = !string.IsNullOrEmpty(Login) &&
                               !string.IsNullOrEmpty(Password);
+        }
+
+        async void ExecuteNavigationCommand()
+        {
+            await _navigationService.NavigateAsync("SignUpPage");
+        }
+
+        void ExecuteSignInCommand()
+        {
+            UserDialogs.Instance.Alert("Ooops, wait for database, dude!", $"Calm down, {Login}!", "Got it(");
         }
     }
 }
