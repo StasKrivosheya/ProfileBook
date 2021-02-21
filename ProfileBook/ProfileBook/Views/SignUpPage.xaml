@@ -17,7 +17,7 @@
                     BackgroundColor="DarkOrange"
                     BorderColor="Black"
                     BorderWidth="1" 
-                    IsEnabled="{Binding IsEnabled, Mode=OneWay}"/>
+                    IsEnabled="{Binding IsEnabled}"/>
         </StackLayout>
     </StackLayout>
 </ContentPage>
