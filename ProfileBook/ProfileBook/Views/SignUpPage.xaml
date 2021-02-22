@@ -16,7 +16,8 @@
             <Button Text="sign up"
                     BackgroundColor="DarkOrange"
                     BorderColor="Black"
-                    BorderWidth="1" 
+                    BorderWidth="1"
+                    Command="{Binding SignUpCommand}"
                     IsEnabled="{Binding IsEnabled}"/>
         </StackLayout>
     </StackLayout>
