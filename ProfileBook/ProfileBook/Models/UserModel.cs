@@ -3,7 +3,7 @@
 namespace ProfileBook.Models
 {
     [Table("Users")]
-    class UserModel : IEntity
+    public class UserModel : IEntity
     {
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }

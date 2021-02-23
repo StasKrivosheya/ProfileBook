@@ -1,5 +1,6 @@
 using Prism;
 using Prism.Ioc;
+using ProfileBook.Services.Repository;
 using ProfileBook.ViewModels;
 using ProfileBook.Views;
 using Xamarin.Essentials.Implementation;
@@ -26,10 +27,12 @@ namespace ProfileBook
         {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
+            containerRegistry.RegisterInstance<IRepositoryService>(Container.Resolve<RepositoryService>());
+
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            
-            containerRegistry.RegisterForNavigation<SignUpPage, SignUpPageViewModel>();
+
             containerRegistry.RegisterForNavigation<SignInPage, SignInPageViewModel>();
+            containerRegistry.RegisterForNavigation<SignUpPage, SignUpPageViewModel>();
         }
     }
 }

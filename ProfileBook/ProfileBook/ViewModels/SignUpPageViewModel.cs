@@ -5,17 +5,23 @@ using System.Collections.Generic;
 using System.Linq;
 using Acr.UserDialogs;
 using Prism.Navigation;
+using ProfileBook.Models;
+using ProfileBook.Services.Repository;
 using ProfileBook.Validators;
 
 namespace ProfileBook.ViewModels
 {
     public class SignUpPageViewModel : ViewModelBase
     {
-        public SignUpPageViewModel(INavigationService navigationService) :
+        public SignUpPageViewModel(INavigationService navigationService, IRepositoryService repositoryService) :
             base(navigationService)
         {
             Title = "Users SignUp";
+
+            _repositoryService = repositoryService;
         }
+
+        private IRepositoryService _repositoryService;
 
         private DelegateCommand _signUpCommand;
         public DelegateCommand SignUpCommand =>
@@ -73,7 +79,7 @@ namespace ProfileBook.ViewModels
             IsEnabled = allEntriesAreFilled;
         }
 
-        private void ExecuteSignUpCommand()
+        private async void ExecuteSignUpCommand()
         {
             if (Password == ConfirmPassword)
             {
@@ -91,17 +97,21 @@ namespace ProfileBook.ViewModels
                                                "Use at least 1 lowercase letter.\n" +
                                                "Use at least 1 uppercase letter.\n" +
                                                "Password length must be from 8 to 16 characters.", "Invalid password!");
-                    Password = ConfirmPassword = "";
                 }
                 else
                 {
-                    UserDialogs.Instance.Alert("Everything is ok so far. Wait for implementing repository", "Nice job");
+                    int result = await _repositoryService.InsertItemAsync(new UserModel()
+                        {Login = Login, Password = Password});
+
+                    if (result == -1)
+                    {
+                        UserDialogs.Instance.Alert("Such user already exists!", "Register failed!");
+                    }
+                    else
+                    {
+                        UserDialogs.Instance.Alert($"Dear {Login}, your id is {result}!", "Success!");
+                    }
                 }
-
-                // todo: check if login is already taken
-
-                // todo: save to db and navigate to main list view
-
             }
             else
             {
