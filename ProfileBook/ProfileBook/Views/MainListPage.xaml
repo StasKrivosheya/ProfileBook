@@ -8,6 +8,8 @@
 
     <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
         <Label Text="{Binding TmpPrompt}" />
+        <Button Text="Log out"
+                Command="{Binding LogOutCommand}"/>
     </StackLayout>
   
 </ContentPage>

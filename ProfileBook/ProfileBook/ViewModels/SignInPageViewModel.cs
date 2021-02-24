@@ -8,6 +8,7 @@ using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services.Repository;
+using ProfileBook.Services.Settings;
 using ProfileBook.Views;
 using Xamarin.Forms;
 
@@ -16,16 +17,20 @@ namespace ProfileBook.ViewModels
     public class SignInPageViewModel : ViewModelBase
     {
         public SignInPageViewModel(INavigationService navigationService,
-            IRepositoryService repositoryService) :
+            IRepositoryService repositoryService,
+            ISettingsManager settingsManager) :
             base(navigationService)
         {
             Title = "Users SignIn";
 
             _repositoryService = repositoryService;
             _repositoryService.CreateTableAsync<UserModel>();
+
+            _settingsManager = settingsManager;
         }
 
         private readonly IRepositoryService _repositoryService;
+        private readonly ISettingsManager _settingsManager;
 
         private DelegateCommand _navigateCommand;
         public DelegateCommand NavigateCommand =>
@@ -81,15 +86,12 @@ namespace ProfileBook.ViewModels
                 u.Login.Equals(Login) && u.Password.Equals(Password));
 
             if (query != null)
-            {
-                // todo: remember user (login, maybe id)
-                // todo: remove parameters
-
-                var parameters = new NavigationParameters();
-                parameters.Add("tmp", $"Welcome to Main List View, dear {Login}");
+            { 
+                _settingsManager.RememberedUserId = query.Id;
+                _settingsManager.RememberedUserLogin = query.Login;
 
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}" +
-                                                      $"/{nameof(MainListPage)}", parameters);
+                                                      $"/{nameof(MainListPage)}");
             }
             else
             {
