@@ -82,16 +82,30 @@ namespace ProfileBook.ViewModels
 
             if (query != null)
             {
-                // todo: navigation to main list page
-                // tmp alert
-                UserDialogs.Instance.Alert($"Dear {Login}, your login and password are match, so u're in)",
-                    "Success");
+                // todo: remember user (login, maybe id)
+                // todo: remove parameters
+
+                var parameters = new NavigationParameters();
+                parameters.Add("tmp", $"Welcome to Main List View, dear {Login}");
+
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}" +
+                                                      $"/{nameof(MainListPage)}", parameters);
             }
             else
             {
                 UserDialogs.Instance.Alert("Please, check your inputs and retry.\n" +
                                            "Or register if you haven't done it yet!",
-                    "Wrong login or password");
+                    "Invalid login or password", "OK");
+                Password = string.Empty;
+            }
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            if (parameters.TryGetValue(nameof(Login), out string login))
+            {
+                Login = login;
+                Password = string.Empty;
             }
         }
     }

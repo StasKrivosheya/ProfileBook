@@ -8,6 +8,8 @@ using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services.Repository;
 using ProfileBook.Validators;
+using ProfileBook.Views;
+using Xamarin.Forms;
 
 namespace ProfileBook.ViewModels
 {
@@ -109,7 +111,11 @@ namespace ProfileBook.ViewModels
                     }
                     else
                     {
-                        UserDialogs.Instance.Alert($"Dear {Login}, your id is {result}!", "Success!");
+                        UserDialogs.Instance.Alert($"Dear {Login}, you've been successfully register!\n" +
+                                                   $"Sign in to continue.", "Successfully registered!", "OK");
+
+                        var parameters = new NavigationParameters {{nameof(Login), Login}};
+                        await NavigationService.GoBackAsync(parameters);
                     }
                 }
             }
