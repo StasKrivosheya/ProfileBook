@@ -6,21 +6,26 @@ using System.Linq;
 using System.Windows.Input;
 using Acr.UserDialogs;
 using Prism.Navigation;
+using ProfileBook.Models;
+using ProfileBook.Services.Repository;
+using ProfileBook.Views;
 using Xamarin.Forms;
 
 namespace ProfileBook.ViewModels
 {
     public class SignInPageViewModel : ViewModelBase
     {
-        public SignInPageViewModel(INavigationService navigationService) :
+        public SignInPageViewModel(INavigationService navigationService,
+            IRepositoryService repositoryService) :
             base(navigationService)
         {
             Title = "Users SignIn";
 
-            _navigationService = navigationService;
+            _repositoryService = repositoryService;
+            _repositoryService.CreateTableAsync<UserModel>();
         }
 
-        private readonly INavigationService _navigationService;
+        private readonly IRepositoryService _repositoryService;
 
         private DelegateCommand _navigateCommand;
         public DelegateCommand NavigateCommand =>
@@ -65,14 +70,29 @@ namespace ProfileBook.ViewModels
                               !string.IsNullOrEmpty(Password);
         }
 
-        async void ExecuteNavigationCommand()
+        private async void ExecuteNavigationCommand()
         {
-            await _navigationService.NavigateAsync("SignUpPage");
+            await NavigationService.NavigateAsync(nameof(SignUpPage));
         }
 
-        void ExecuteSignInCommand()
+        private async void ExecuteSignInCommand()
         {
-            UserDialogs.Instance.Alert("Ooops, wait for database, dude!", $"Calm down, {Login}!", "Got it(");
+            var query = await _repositoryService.GetItemAsync<UserModel>(u =>
+                u.Login.Equals(Login) && u.Password.Equals(Password));
+
+            if (query != null)
+            {
+                // todo: navigation to main list page
+                // tmp alert
+                UserDialogs.Instance.Alert($"Dear {Login}, your login and password are match, so u're in)",
+                    "Success");
+            }
+            else
+            {
+                UserDialogs.Instance.Alert("Please, check your inputs and retry.\n" +
+                                           "Or register if you haven't done it yet!",
+                    "Wrong login or password");
+            }
         }
     }
 }
