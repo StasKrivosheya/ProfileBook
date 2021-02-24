@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
+using ProfileBook.Services.Authorization;
 using ProfileBook.Services.Repository;
 using ProfileBook.Services.Settings;
 using ProfileBook.ViewModels;
@@ -19,23 +20,23 @@ namespace ProfileBook
         {
         }
 
-        private ISettingsManager _settingsManager;
-
-        private ISettingsManager SettingsManager => _settingsManager ?? (_settingsManager = Container.Resolve<ISettingsManager>());
+        private IAuthorizationService _authorizationService;
+        private IAuthorizationService AuthorizationService =>
+            _authorizationService ?? (_authorizationService = Container.Resolve<IAuthorizationService>());
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
 
-            if (SettingsManager.RememberedUserLogin == string.Empty)
+            if (AuthorizationService.Authorized)
             {
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}" +
-                                                      $"/{nameof(SignInPage)}");
+                                                      $"/{nameof(MainListPage)}");
             }
             else
             {
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}" +
-                                                      $"/{nameof(MainListPage)}");
+                                                      $"/{nameof(SignInPage)}");
             }
             
         }
@@ -48,6 +49,7 @@ namespace ProfileBook
             // Services
             containerRegistry.RegisterInstance<IRepositoryService>(Container.Resolve<RepositoryService>());
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
+            containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
