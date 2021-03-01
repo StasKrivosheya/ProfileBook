@@ -28,7 +28,7 @@ namespace ProfileBook
         {
             InitializeComponent();
 
-            if (AuthorizationService.Authorized)
+            if (true/*AuthorizationService.Authorized*/) // tmp, for debugging
             {
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}" +
                                                       $"/{nameof(MainListPage)}");

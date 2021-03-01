@@ -6,10 +6,19 @@
              x:Class="ProfileBook.Views.MainListPage"
              Title="{Binding Title}">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding LogOutCommand}"
+                     Text="log out"
+                     IconImageSource="ic_exit_to_app.png"
+                     Order="Primary"/>
+        <ToolbarItem Command="{Binding SettingsTapCommand}"
+                     Text="Settings"
+                     IconImageSource="ic_settings.png"
+                     Order="Primary"/>
+    </ContentPage.ToolbarItems>
+
     <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-        <Label Text="{Binding TmpPrompt}" />
-        <Button Text="Log out"
-                Command="{Binding LogOutCommand}"/>
+        <ScrollView></ScrollView>
     </StackLayout>
   
 </ContentPage>

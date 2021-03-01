@@ -3,6 +3,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Services.Settings;
 using ProfileBook.Views;
@@ -21,28 +22,27 @@ namespace ProfileBook.ViewModels
             _settingsManager = settingsManager;
         }
 
+        #region --- Private Fields ---
+
         private readonly ISettingsManager _settingsManager;
 
-        #region tmp
-
         private DelegateCommand _logOutCommand;
-        public DelegateCommand LogOutCommand => _logOutCommand ??
-                                                (_logOutCommand = new DelegateCommand(ExecuteDelegateCommand));
+        private DelegateCommand _settingsTapCommand;
 
-        private string _tmpPrompt = "Default text from MainListPageViewModel";
-        public string TmpPrompt
-        {
-            get => _tmpPrompt;
-            set => SetProperty(ref _tmpPrompt, value);
-        }
+        #endregion
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
-        {
-            if (_settingsManager.RememberedUserLogin != string.Empty)
-            {
-                TmpPrompt = $"Hello, dear {_settingsManager.RememberedUserLogin}. Press button below to log out.";
-            }
-        }
+        #region --- Public Properties ---
+
+        public DelegateCommand LogOutCommand =>
+            _logOutCommand ?? (_logOutCommand = new DelegateCommand(ExecuteDelegateCommand));
+
+
+        public DelegateCommand SettingsTapCommand =>
+            _settingsTapCommand ?? (_settingsTapCommand = new DelegateCommand(ExecuteSettingsTapCommand));
+
+        #endregion
+
+        #region --- Private Helpers ---
 
         private void ExecuteDelegateCommand()
         {
@@ -52,6 +52,12 @@ namespace ProfileBook.ViewModels
             NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInPage)}");
         }
 
+        private void ExecuteSettingsTapCommand()
+        {
+            UserDialogs.Instance.Alert("Settings page hasn't been implemented yet.", "Oops");
+        }
+
         #endregion
+
     }
 }
