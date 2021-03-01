@@ -17,8 +17,64 @@
                      Order="Primary"/>
     </ContentPage.ToolbarItems>
 
-    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-        <ScrollView></ScrollView>
-    </StackLayout>
-  
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0">
+                <ListView ItemsSource="{Binding Profiles}"
+                          IsVisible="{Binding IsListVisible}"
+                          SelectedItem="{Binding SelectedProfile}"
+                          HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem Text="Edit"/>
+                                    <MenuItem Text="Delete"/>
+                                </ViewCell.ContextActions>
+                                <ViewCell.View>
+                                    <Grid Padding="15">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Grid.Column="0" Source="{Binding ProfileImagePath}" HeightRequest="70"/>
+
+                                        <StackLayout Grid.Column="1" Margin="10, 0">
+                                            <Label Text="{Binding NickName}"
+                                                   FontAttributes="Bold"/>
+                                            <Label Text="{Binding Name}"/>
+                                            <Label Text="{Binding InsertionTime}"
+                                                   FontAttributes="Italic"/>
+                                        </StackLayout>
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Label IsVisible="{Binding IsLabelVisible}"
+                       Text="No profiles added."
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+
+            <ImageButton Grid.Row="0"
+                         Command="{Binding AddCommand}"
+                         Source="ic_add.png"
+                         BorderColor="Black"
+                         BorderWidth="3"
+                         CornerRadius="35"
+                         HorizontalOptions="End"
+                         VerticalOptions="End"
+                         WidthRequest="70"
+                         HeightRequest="70"
+                         Margin="20"
+                         Padding="20"
+                         BackgroundColor="#1E90FF"/>
+        </Grid>
+    </ContentPage.Content>
 </ContentPage>
