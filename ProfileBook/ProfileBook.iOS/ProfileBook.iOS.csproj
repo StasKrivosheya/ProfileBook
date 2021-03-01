@@ -286,5 +286,8 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_settings%403x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pic_profile.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
