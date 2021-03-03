@@ -12,5 +12,11 @@ namespace ProfileBook.Services.Authorization
         private readonly ISettingsManager _settingsManager;
         
         public bool Authorized => _settingsManager.RememberedUserLogin != string.Empty;
+
+        public void UnAuthorize()
+        {
+            _settingsManager.RememberedUserId = -1;
+            _settingsManager.RememberedUserLogin = string.Empty;
+        }
     }
 }

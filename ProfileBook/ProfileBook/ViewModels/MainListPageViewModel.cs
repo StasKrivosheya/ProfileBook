@@ -4,6 +4,7 @@ using Prism.Commands;
 using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Services.Authorization;
 using ProfileBook.Services.Settings;
 using ProfileBook.Views;
 using Xamarin.Forms;
@@ -15,6 +16,7 @@ namespace ProfileBook.ViewModels
         #region --- Private Fields ---
 
         private readonly ISettingsManager _settingsManager;
+        private readonly IAuthorizationService _authorizationService;
 
         private DelegateCommand _logOutCommand;
         private DelegateCommand _settingsTapCommand;
@@ -32,12 +34,14 @@ namespace ProfileBook.ViewModels
         #region --- Constructors ---
 
         public MainListPageViewModel(INavigationService navigationService,
-            ISettingsManager settingsManager) :
+            ISettingsManager settingsManager,
+            IAuthorizationService authorizationService) :
             base(navigationService)
         {
             Title = "List View";
 
             _settingsManager = settingsManager;
+            _authorizationService = authorizationService;
 
             Profiles = new ObservableCollection<ProfileModel>()
             {
@@ -123,8 +127,7 @@ namespace ProfileBook.ViewModels
 
         private void ExecuteLogOutCommand()
         {
-            _settingsManager.RememberedUserLogin = string.Empty;
-            _settingsManager.RememberedUserId = -1;
+            _authorizationService.UnAuthorize();
 
             NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInPage)}");
         }
