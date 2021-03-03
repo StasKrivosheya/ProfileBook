@@ -20,24 +20,24 @@ namespace ProfileBook.Services.Repository
 
         #region --- Interface Implementation ---
 
-        public async Task CreateTableAsync<T>() where T : IEntityBase, new()
+        public Task CreateTableAsync<T>() where T : IEntityBase, new()
         {
-            await _database.CreateTableAsync<T>();
+            return _database.CreateTableAsync<T>();
         }
 
-        public async Task<List<T>> GetItemsAsync<T>() where T : IEntityBase, new()
+        public Task<List<T>> GetItemsAsync<T>() where T : IEntityBase, new()
         {
-            return await _database.Table<T>().ToListAsync();
+            return _database.Table<T>().ToListAsync();
         }
 
-        public async Task<T> GetItemAsync<T>(int id) where T : IEntityBase, new()
+        public Task<T> GetItemAsync<T>(int id) where T : IEntityBase, new()
         {
-            return await _database.GetAsync<T>(id);
+            return _database.GetAsync<T>(id);
         }
 
-        public async Task<T> GetItemAsync<T>(Expression<Func<T, bool>> predicate) where T : IEntityBase, new()
+        public Task<T> GetItemAsync<T>(Expression<Func<T, bool>> predicate) where T : IEntityBase, new()
         {
-            return await _database.FindAsync<T>(predicate);
+            return _database.FindAsync<T>(predicate);
         }
 
         public async Task<int> InsertItemAsync<T>(T item) where T : IEntityBase, new()
@@ -63,14 +63,14 @@ namespace ProfileBook.Services.Repository
             return result;
         }
 
-        public async Task<int> UpdateItemAsync<T>(T item) where T : IEntityBase, new()
+        public Task<int> UpdateItemAsync<T>(T item) where T : IEntityBase, new()
         {
-            return await _database.UpdateAsync(item);
+            return _database.UpdateAsync(item);
         }
 
-        public async Task<int> DeleteItemAsync<T>(T item) where T : IEntityBase, new()
+        public Task<int> DeleteItemAsync<T>(T item) where T : IEntityBase, new()
         {
-            return await _database.DeleteAsync<T>(item);
+            return _database.DeleteAsync<T>(item);
         }
 
         #endregion

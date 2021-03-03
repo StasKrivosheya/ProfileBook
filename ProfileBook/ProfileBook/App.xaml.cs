@@ -5,6 +5,7 @@ using Prism.Unity;
 using ProfileBook.Services.Authorization;
 using ProfileBook.Services.Repository;
 using ProfileBook.Services.Settings;
+using ProfileBook.Services.UserService;
 using ProfileBook.ViewModels;
 using ProfileBook.Views;
 using Xamarin.Essentials;
@@ -32,7 +33,7 @@ namespace ProfileBook
         {
             InitializeComponent();
 
-            if (true/*AuthorizationService.Authorized*/) // tmp, for debugging
+            if (AuthorizationService.Authorized)
             {
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}" +
                                                       $"/{nameof(MainListPage)}");
@@ -54,6 +55,7 @@ namespace ProfileBook
             containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
+            containerRegistry.RegisterInstance<IUserService>(Container.Resolve<UserService>());
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();

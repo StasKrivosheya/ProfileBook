@@ -1,9 +1,8 @@
 ﻿using Prism.Commands;
 using Acr.UserDialogs;
 using Prism.Navigation;
-using ProfileBook.Models;
 using ProfileBook.Services.Authorization;
-using ProfileBook.Services.Repository;
+using ProfileBook.Services.UserService;
 using ProfileBook.Views;
 using Xamarin.Forms;
 
@@ -13,8 +12,8 @@ namespace ProfileBook.ViewModels
     {
         #region --- Private Fields ---
 
-        private readonly IRepository _repository;
         private readonly IAuthorizationService _authorizationService;
+        private readonly IUserService _userService;
 
         private DelegateCommand _navigateCommand;
         private DelegateCommand _signInCommand;
@@ -29,14 +28,14 @@ namespace ProfileBook.ViewModels
         #region --- Constructors ---
 
         public SignInPageViewModel(INavigationService navigationService,
-            IRepository repository,
+            //IRepository repository,
+            IUserService userService,
             IAuthorizationService authorizationService) :
             base(navigationService)
         {
             Title = "Users SignIn";
 
-            _repository = repository;
-            _repository.CreateTableAsync<UserModel>();
+            _userService = userService;
 
             _authorizationService = authorizationService;
         }
@@ -103,7 +102,7 @@ namespace ProfileBook.ViewModels
 
         private async void ExecuteSignInCommand()
         {
-            var query = await _repository.GetItemAsync<UserModel>(u =>
+            var query = await _userService.GetItemAsync(u =>
                 u.Login.Equals(Login) && u.Password.Equals(Password));
 
             if (query != null)

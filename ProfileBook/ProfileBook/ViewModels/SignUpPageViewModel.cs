@@ -3,6 +3,7 @@ using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services.Repository;
+using ProfileBook.Services.UserService;
 using ProfileBook.Validators;
 
 namespace ProfileBook.ViewModels
@@ -11,7 +12,7 @@ namespace ProfileBook.ViewModels
     {
         #region --- Private Fields ---
 
-        private readonly IRepository _repository;
+        private readonly IUserService _userService;
 
         private DelegateCommand _signUpCommand;
 
@@ -25,12 +26,13 @@ namespace ProfileBook.ViewModels
 
         #region --- Constructors ---
 
-        public SignUpPageViewModel(INavigationService navigationService, IRepository repository) :
+        public SignUpPageViewModel(INavigationService navigationService,
+            IUserService userService) :
             base(navigationService)
         {
             Title = "Users SignUp";
 
-            _repository = repository;
+            _userService = userService;
         }
 
         #endregion
@@ -104,7 +106,7 @@ namespace ProfileBook.ViewModels
                 }
                 else
                 {
-                    int result = await _repository.InsertItemAsync(new UserModel()
+                    int result = await _userService.InsertItemAsync(new UserModel()
                     { Login = Login, Password = Password });
 
                     if (result == -1)
