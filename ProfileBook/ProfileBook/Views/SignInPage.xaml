@@ -8,26 +8,28 @@
 
     <StackLayout Padding="40">
         <StackLayout VerticalOptions="CenterAndExpand">
-            <Entry Placeholder="Login" Text="{Binding Login}" />
-            <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
+            <Entry Text="{Binding Login}"
+                   Placeholder="Login" />
+            <Entry Text="{Binding Password}"
+                   Placeholder="Password"
+                   IsPassword="True" />
         </StackLayout>
         <StackLayout VerticalOptions="CenterAndExpand">
-            <Button Text="sign in"
+            <Button Command="{Binding SignInCommand}"
+                    IsEnabled="{Binding IsButtonEnabled}"
+                    Text="sign in"
                     BackgroundColor="DarkOrange"
                     BorderColor="Black"
                     BorderWidth="1"
-                    Command="{Binding SignInCommand}"
-                    IsEnabled="{Binding IsButtonEnabled}"/>
-            <Label HorizontalOptions="CenterAndExpand" Margin="10, 0">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="SIGN UP" TextColor="Blue" TextDecorations="Underline">
-                            <Span.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding NavigateCommand}"/>
-                            </Span.GestureRecognizers>
-                        </Span>
-                    </FormattedString>
-                </Label.FormattedText>
+            />
+            <Label HorizontalOptions="CenterAndExpand"
+                   Margin="10"
+                   Text="SIGN UP"
+                   TextDecorations="Underline"
+                   TextColor="Blue">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateCommand}"/>
+                </Label.GestureRecognizers>
             </Label>
         </StackLayout>
     </StackLayout>

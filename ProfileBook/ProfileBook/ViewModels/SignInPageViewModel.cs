@@ -1,15 +1,9 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Input;
 using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services.Authorization;
 using ProfileBook.Services.Repository;
-using ProfileBook.Services.Settings;
 using ProfileBook.Views;
 using Xamarin.Forms;
 
@@ -17,9 +11,25 @@ namespace ProfileBook.ViewModels
 {
     public class SignInPageViewModel : ViewModelBase
     {
+        #region --- Private Fields ---
+
+        private readonly IRepositoryService _repositoryService;
+        private readonly IAuthorizationService _authorizationService;
+
+        private DelegateCommand _navigateCommand;
+        private DelegateCommand _signInCommand;
+
+        private bool _isButtonEnabled;
+
+        private string _login;
+        private string _password;
+
+        #endregion
+
+        #region --- Constructors ---
+
         public SignInPageViewModel(INavigationService navigationService,
             IRepositoryService repositoryService,
-            ISettingsManager settingsManager,
             IAuthorizationService authorizationService) :
             base(navigationService)
         {
@@ -28,31 +38,27 @@ namespace ProfileBook.ViewModels
             _repositoryService = repositoryService;
             _repositoryService.CreateTableAsync<UserModel>();
 
-            _settingsManager = settingsManager;
-
             _authorizationService = authorizationService;
         }
 
-        private readonly IRepositoryService _repositoryService;
-        private readonly ISettingsManager _settingsManager;
-        private readonly IAuthorizationService _authorizationService;
+        #endregion
 
-        private DelegateCommand _navigateCommand;
+        #region --- Public Properties ---
+
         public DelegateCommand NavigateCommand =>
             _navigateCommand ?? (_navigateCommand = new DelegateCommand(ExecuteNavigationCommand));
 
-        private DelegateCommand _signInCommand;
+
         public DelegateCommand SignInCommand =>
             _signInCommand ?? (_signInCommand = new DelegateCommand(ExecuteSignInCommand));
 
-        private bool _isButtonEnabled;
+
         public bool IsButtonEnabled
         {
             get => _isButtonEnabled;
             set => SetProperty(ref _isButtonEnabled, value);
         }
 
-        private string _login;
         public string Login
         {
             get => _login;
@@ -63,7 +69,6 @@ namespace ProfileBook.ViewModels
             }
         }
 
-        private string _password;
         public string Password
         {
             get => _password;
@@ -74,11 +79,22 @@ namespace ProfileBook.ViewModels
             }
         }
 
-        private void UpdateSignInButtonState()
+        #endregion
+
+        #region --- Overrides ---
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            IsButtonEnabled = !string.IsNullOrEmpty(Login) &&
-                              !string.IsNullOrEmpty(Password);
+            if (parameters.TryGetValue(nameof(Login), out string login))
+            {
+                Login = login;
+                Password = string.Empty;
+            }
         }
+
+        #endregion
+
+        #region --- Command Handlers ---
 
         private async void ExecuteNavigationCommand()
         {
@@ -106,13 +122,16 @@ namespace ProfileBook.ViewModels
             }
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        #endregion
+
+        #region --- Private Helpers ---
+
+        private void UpdateSignInButtonState()
         {
-            if (parameters.TryGetValue(nameof(Login), out string login))
-            {
-                Login = login;
-                Password = string.Empty;
-            }
+            IsButtonEnabled = !string.IsNullOrEmpty(Login) &&
+                              !string.IsNullOrEmpty(Password);
         }
+
+        #endregion
     }
 }

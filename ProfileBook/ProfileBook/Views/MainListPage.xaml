@@ -8,7 +8,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding LogOutCommand}"
-                     Text="log out"
+                     Text="Log out"
                      IconImageSource="ic_exit_to_app.png"
                      Order="Primary"/>
         <ToolbarItem Command="{Binding SettingsTapCommand}"
@@ -40,7 +40,9 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <Image Grid.Column="0" Source="{Binding ProfileImagePath}" HeightRequest="70"/>
+                                        <Image Grid.Column="0"
+                                               Source="{Binding ProfileImagePath}"
+                                               HeightRequest="70"/>
 
                                         <StackLayout Grid.Column="1" Margin="10, 0">
                                             <Label Text="{Binding NickName}"
@@ -65,15 +67,15 @@
             <ImageButton Grid.Row="0"
                          Command="{Binding AddCommand}"
                          Source="ic_add.png"
-                         BorderColor="Black"
-                         BorderWidth="3"
-                         CornerRadius="35"
                          HorizontalOptions="End"
                          VerticalOptions="End"
                          WidthRequest="70"
                          HeightRequest="70"
                          Margin="20"
                          Padding="20"
+                         BorderColor="Black"
+                         BorderWidth="3"
+                         CornerRadius="35"
                          BackgroundColor="#1E90FF"/>
         </Grid>
     </ContentPage.Content>

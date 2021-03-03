@@ -8,17 +8,24 @@
 
     <StackLayout Padding="40">
         <StackLayout VerticalOptions="CenterAndExpand">
-            <Entry Placeholder="Login" Text="{Binding Login}" />
-            <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
-            <Entry Placeholder="Confirm password" IsPassword="True" Text="{Binding ConfirmPassword}" />
+            <Entry Text="{Binding Login}"
+                   Placeholder="Login" />
+
+            <Entry Text="{Binding Password}"
+                   Placeholder="Password"
+                   IsPassword="True" />
+
+            <Entry Text="{Binding ConfirmPassword}"
+                   Placeholder="Confirm password"
+                   IsPassword="True" />
         </StackLayout>
         <StackLayout VerticalOptions="CenterAndExpand">
-            <Button Text="sign up"
+            <Button Command="{Binding SignUpCommand}"
+                    IsEnabled="{Binding IsEnabled}"
+                    Text="sign up"
                     BackgroundColor="DarkOrange"
                     BorderColor="Black"
-                    BorderWidth="1"
-                    Command="{Binding SignUpCommand}"
-                    IsEnabled="{Binding IsEnabled}"/>
+                    BorderWidth="1" />
         </StackLayout>
     </StackLayout>
 </ContentPage>

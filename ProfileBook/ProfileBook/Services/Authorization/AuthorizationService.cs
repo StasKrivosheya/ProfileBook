@@ -11,6 +11,8 @@ namespace ProfileBook.Services.Authorization
             _settingsManager = settingsManager;
         }
 
+        #region --- Interface Implementation ---
+
         public bool Authorized => _settingsManager.RememberedUserLogin != string.Empty;
 
         public void Authorize(int id, string login)
@@ -24,5 +26,7 @@ namespace ProfileBook.Services.Authorization
             _settingsManager.RememberedUserId = -1;
             _settingsManager.RememberedUserLogin = string.Empty;
         }
+
+        #endregion
     }
 }

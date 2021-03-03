@@ -4,6 +4,8 @@ namespace ProfileBook.Services.Settings
 {
     public class SettingsManager : ISettingsManager
     {
+        #region --- Interface Implementation ---
+
         public int RememberedUserId
         {
             get => Preferences.Get(nameof(RememberedUserId), default(int));
@@ -15,5 +17,7 @@ namespace ProfileBook.Services.Settings
             get => Preferences.Get(nameof(RememberedUserLogin), default(string));
             set => Preferences.Set(nameof(RememberedUserLogin), value);
         }
+
+        #endregion
     }
 }

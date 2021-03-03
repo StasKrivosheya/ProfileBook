@@ -18,6 +18,8 @@ namespace ProfileBook.Services.Repository
                 Path.Combine(Constants.DatabasePath, Constants.DATABASE_NAME));
         }
 
+        #region --- Interface Implementation ---
+
         public async Task CreateTableAsync<T>() where T : IEntityBase, new()
         {
             await _database.CreateTableAsync<T>();
@@ -70,5 +72,7 @@ namespace ProfileBook.Services.Repository
         {
             return await _database.DeleteAsync<T>(item);
         }
+
+        #endregion
     }
 }

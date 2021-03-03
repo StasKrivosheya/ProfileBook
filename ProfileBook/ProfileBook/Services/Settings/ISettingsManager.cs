@@ -3,6 +3,7 @@
     public interface ISettingsManager
     {
         int RememberedUserId { get; set; }
+
         string RememberedUserLogin { get; set; }
     }
 }

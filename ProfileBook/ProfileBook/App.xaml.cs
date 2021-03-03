@@ -15,14 +15,18 @@ using Xamarin.Forms;
 namespace ProfileBook
 {
     public partial class App : PrismApplication
-    {public App(IPlatformInitializer initializer)
+    {
+        private IAuthorizationService _authorizationService;
+
+        public App(IPlatformInitializer initializer)
             : base(initializer)
         {
         }
 
-        private IAuthorizationService _authorizationService;
         private IAuthorizationService AuthorizationService =>
             _authorizationService ?? (_authorizationService = Container.Resolve<IAuthorizationService>());
+
+        #region --- Overrides ---
 
         protected override async void OnInitialized()
         {
@@ -57,5 +61,7 @@ namespace ProfileBook
             containerRegistry.RegisterForNavigation<SignUpPage, SignUpPageViewModel>();
             containerRegistry.RegisterForNavigation<MainListPage, MainListPageViewModel>();
         }
+
+        #endregion
     }
 }

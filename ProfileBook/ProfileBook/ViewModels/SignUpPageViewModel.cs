@@ -1,20 +1,30 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services.Repository;
 using ProfileBook.Validators;
-using ProfileBook.Views;
-using Xamarin.Forms;
 
 namespace ProfileBook.ViewModels
 {
     public class SignUpPageViewModel : ViewModelBase
     {
+        #region --- Private Fields ---
+
+        private readonly IRepositoryService _repositoryService;
+
+        private DelegateCommand _signUpCommand;
+
+        private bool _isButtonEnabled;
+
+        private string _login;
+        private string _password;
+        private string _confirmPassword;
+
+        #endregion
+
+        #region --- Constructors ---
+
         public SignUpPageViewModel(INavigationService navigationService, IRepositoryService repositoryService) :
             base(navigationService)
         {
@@ -23,20 +33,19 @@ namespace ProfileBook.ViewModels
             _repositoryService = repositoryService;
         }
 
-        private IRepositoryService _repositoryService;
+        #endregion
 
-        private DelegateCommand _signUpCommand;
+        #region --- Public Properties
+
         public DelegateCommand SignUpCommand =>
             _signUpCommand ?? (_signUpCommand = new DelegateCommand(ExecuteSignUpCommand));
 
-        private bool _isButtonEnabled;
         public bool IsEnabled
         {
             get => _isButtonEnabled;
             private set => SetProperty(ref _isButtonEnabled, value);
         }
 
-        private string _login;
         public string Login
         {
             get => _login;
@@ -48,7 +57,6 @@ namespace ProfileBook.ViewModels
             }
         }
 
-        private string _password;
         public string Password
         {
             get => _password;
@@ -60,7 +68,6 @@ namespace ProfileBook.ViewModels
             }
         }
 
-        private string _confirmPassword;
         public string ConfirmPassword
         {
             get => _confirmPassword;
@@ -72,14 +79,9 @@ namespace ProfileBook.ViewModels
             }
         }
 
-        private void UpdateSignUpButtonState()
-        {
-            bool allEntriesAreFilled = !string.IsNullOrEmpty(_login) &&
-                                       !string.IsNullOrEmpty(_password) &&
-                                       !string.IsNullOrEmpty(_confirmPassword);
+        #endregion
 
-            IsEnabled = allEntriesAreFilled;
-        }
+        #region --- Command Handlers ---
 
         private async void ExecuteSignUpCommand()
         {
@@ -103,7 +105,7 @@ namespace ProfileBook.ViewModels
                 else
                 {
                     int result = await _repositoryService.InsertItemAsync(new UserModel()
-                        {Login = Login, Password = Password});
+                    { Login = Login, Password = Password });
 
                     if (result == -1)
                     {
@@ -114,7 +116,7 @@ namespace ProfileBook.ViewModels
                         UserDialogs.Instance.Alert($"Dear {Login}, you've been successfully register!\n" +
                                                    $"Sign in to continue.", "Successfully registered!", "OK");
 
-                        var parameters = new NavigationParameters {{nameof(Login), Login}};
+                        var parameters = new NavigationParameters { { nameof(Login), Login } };
                         await NavigationService.GoBackAsync(parameters);
                     }
                 }
@@ -124,5 +126,20 @@ namespace ProfileBook.ViewModels
                 UserDialogs.Instance.Alert("Passwords are different!");
             }
         }
+
+        #endregion
+
+        #region --- Private Helpers ---
+
+        private void UpdateSignUpButtonState()
+        {
+            bool allEntriesAreFilled = !string.IsNullOrEmpty(_login) &&
+                                       !string.IsNullOrEmpty(_password) &&
+                                       !string.IsNullOrEmpty(_confirmPassword);
+
+            IsEnabled = allEntriesAreFilled;
+        }
+
+        #endregion
     }
 }
