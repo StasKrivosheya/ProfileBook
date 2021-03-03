@@ -11,7 +11,7 @@ namespace ProfileBook.ViewModels
     {
         #region --- Private Fields ---
 
-        private readonly IRepositoryService _repositoryService;
+        private readonly IRepository _repository;
 
         private DelegateCommand _signUpCommand;
 
@@ -25,12 +25,12 @@ namespace ProfileBook.ViewModels
 
         #region --- Constructors ---
 
-        public SignUpPageViewModel(INavigationService navigationService, IRepositoryService repositoryService) :
+        public SignUpPageViewModel(INavigationService navigationService, IRepository repository) :
             base(navigationService)
         {
             Title = "Users SignUp";
 
-            _repositoryService = repositoryService;
+            _repository = repository;
         }
 
         #endregion
@@ -104,7 +104,7 @@ namespace ProfileBook.ViewModels
                 }
                 else
                 {
-                    int result = await _repositoryService.InsertItemAsync(new UserModel()
+                    int result = await _repository.InsertItemAsync(new UserModel()
                     { Login = Login, Password = Password });
 
                     if (result == -1)

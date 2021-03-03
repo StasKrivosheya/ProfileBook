@@ -13,7 +13,7 @@ namespace ProfileBook.ViewModels
     {
         #region --- Private Fields ---
 
-        private readonly IRepositoryService _repositoryService;
+        private readonly IRepository _repository;
         private readonly IAuthorizationService _authorizationService;
 
         private DelegateCommand _navigateCommand;
@@ -29,14 +29,14 @@ namespace ProfileBook.ViewModels
         #region --- Constructors ---
 
         public SignInPageViewModel(INavigationService navigationService,
-            IRepositoryService repositoryService,
+            IRepository repository,
             IAuthorizationService authorizationService) :
             base(navigationService)
         {
             Title = "Users SignIn";
 
-            _repositoryService = repositoryService;
-            _repositoryService.CreateTableAsync<UserModel>();
+            _repository = repository;
+            _repository.CreateTableAsync<UserModel>();
 
             _authorizationService = authorizationService;
         }
@@ -103,7 +103,7 @@ namespace ProfileBook.ViewModels
 
         private async void ExecuteSignInCommand()
         {
-            var query = await _repositoryService.GetItemAsync<UserModel>(u =>
+            var query = await _repository.GetItemAsync<UserModel>(u =>
                 u.Login.Equals(Login) && u.Password.Equals(Password));
 
             if (query != null)

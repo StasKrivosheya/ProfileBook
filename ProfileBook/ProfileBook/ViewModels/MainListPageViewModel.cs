@@ -15,7 +15,6 @@ namespace ProfileBook.ViewModels
     {
         #region --- Private Fields ---
 
-        private readonly ISettingsManager _settingsManager;
         private readonly IAuthorizationService _authorizationService;
 
         private DelegateCommand _logOutCommand;
@@ -40,7 +39,6 @@ namespace ProfileBook.ViewModels
         {
             Title = "List View";
 
-            _settingsManager = settingsManager;
             _authorizationService = authorizationService;
 
             Profiles = new ObservableCollection<ProfileModel>()

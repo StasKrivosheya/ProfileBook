@@ -6,7 +6,7 @@ using ProfileBook.Models;
 
 namespace ProfileBook.Services.Repository
 {
-    public interface IRepositoryService
+    public interface IRepository
     {
         Task CreateTableAsync<T>() where T : IEntityBase, new();
         

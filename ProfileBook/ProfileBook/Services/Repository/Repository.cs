@@ -8,11 +8,11 @@ using SQLite;
 
 namespace ProfileBook.Services.Repository
 {
-    public class RepositoryService : IRepositoryService
+    public class Repository : IRepository
     {
         private readonly SQLiteAsyncConnection _database;
 
-        public RepositoryService()
+        public Repository()
         {
             _database = new SQLiteAsyncConnection(
                 Path.Combine(Constants.DatabasePath, Constants.DATABASE_NAME));
