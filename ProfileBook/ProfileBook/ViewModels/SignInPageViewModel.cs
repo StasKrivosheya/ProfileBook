@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Services.Authorization;
 using ProfileBook.Services.Repository;
 using ProfileBook.Services.Settings;
 using ProfileBook.Views;
@@ -18,7 +19,8 @@ namespace ProfileBook.ViewModels
     {
         public SignInPageViewModel(INavigationService navigationService,
             IRepositoryService repositoryService,
-            ISettingsManager settingsManager) :
+            ISettingsManager settingsManager,
+            IAuthorizationService authorizationService) :
             base(navigationService)
         {
             Title = "Users SignIn";
@@ -27,10 +29,13 @@ namespace ProfileBook.ViewModels
             _repositoryService.CreateTableAsync<UserModel>();
 
             _settingsManager = settingsManager;
+
+            _authorizationService = authorizationService;
         }
 
         private readonly IRepositoryService _repositoryService;
         private readonly ISettingsManager _settingsManager;
+        private readonly IAuthorizationService _authorizationService;
 
         private DelegateCommand _navigateCommand;
         public DelegateCommand NavigateCommand =>
@@ -86,9 +91,8 @@ namespace ProfileBook.ViewModels
                 u.Login.Equals(Login) && u.Password.Equals(Password));
 
             if (query != null)
-            { 
-                _settingsManager.RememberedUserId = query.Id;
-                _settingsManager.RememberedUserLogin = query.Login;
+            {
+                _authorizationService.Authorize(query.Id, query.Login);
 
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}" +
                                                       $"/{nameof(MainListPage)}");

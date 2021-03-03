@@ -4,6 +4,8 @@
     {
         bool Authorized { get; }
 
+        void Authorize(int id, string login);
+
         void UnAuthorize();
     }
 }
