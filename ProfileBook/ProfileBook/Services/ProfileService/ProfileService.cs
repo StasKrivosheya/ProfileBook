@@ -7,7 +7,7 @@ using ProfileBook.Services.Repository;
 
 namespace ProfileBook.Services.ProfileService
 {
-    class ProfileService : IProfileService
+    public class ProfileService : IProfileService
     {
         private readonly IRepository _repository;
 

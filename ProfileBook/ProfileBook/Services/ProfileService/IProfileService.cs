@@ -6,7 +6,7 @@ using ProfileBook.Models;
 
 namespace ProfileBook.Services.ProfileService
 {
-    interface IProfileService
+    public interface IProfileService
     {
         Task<List<ProfileModel>> GetItemsAsync();
 
