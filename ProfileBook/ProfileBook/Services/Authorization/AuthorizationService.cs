@@ -15,6 +15,8 @@ namespace ProfileBook.Services.Authorization
 
         public bool Authorized => _settingsManager.RememberedUserLogin != string.Empty;
 
+        public int CurrentUserId => Authorized ? _settingsManager.RememberedUserId : -1;
+
         public void Authorize(int id, string login)
         {
             _settingsManager.RememberedUserId = id;
