@@ -28,7 +28,6 @@ namespace ProfileBook.ViewModels
         #region --- Constructors ---
 
         public SignInPageViewModel(INavigationService navigationService,
-            //IRepository repository,
             IUserService userService,
             IAuthorizationService authorizationService) :
             base(navigationService)

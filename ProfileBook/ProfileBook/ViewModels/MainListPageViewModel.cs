@@ -7,6 +7,7 @@ using ProfileBook.Views;
 using ProfileBook.Models;
 using ProfileBook.Services.Authorization;
 using Acr.UserDialogs;
+using ProfileBook.Services.ProfileService;
 
 namespace ProfileBook.ViewModels
 {
@@ -15,11 +16,11 @@ namespace ProfileBook.ViewModels
         #region --- Private Fields ---
 
         private readonly IAuthorizationService _authorizationService;
+        private readonly IProfileService _profileService;
 
         private DelegateCommand _logOutCommand;
         private DelegateCommand _settingsTapCommand;
         private DelegateCommand _addCommand;
-        private DelegateCommand _editCommand;
 
         private ObservableCollection<ProfileModel> _profiles;
 
@@ -33,52 +34,15 @@ namespace ProfileBook.ViewModels
         #region --- Constructors ---
 
         public MainListPageViewModel(INavigationService navigationService,
-            IAuthorizationService authorizationService) :
+            IAuthorizationService authorizationService,
+            IProfileService profileService) :
             base(navigationService)
         {
             Title = "List View";
 
             _authorizationService = authorizationService;
 
-            Profiles = new ObservableCollection<ProfileModel>()
-            {
-                new ProfileModel()
-                {
-                    Id = 1,
-                    Description = "This is the description of th 1st item.",
-                    InsertionTime = DateTime.Now,
-                    Name = "Ivan Lollipop",
-                    NickName = "Ilol",
-                    ProfileImagePath = "pic_profile.png"
-                },
-                new ProfileModel()
-                {
-                    Id = 2,
-                    Description = "This is the description of th 2nd item.",
-                    InsertionTime = DateTime.Now,
-                    Name = "Rost Oreo",
-                    NickName = "Rostor",
-                    ProfileImagePath = "pic_profile.png"
-                },
-                new ProfileModel()
-                {
-                    Id = 3,
-                    Description = "This is the description of th 3rd item.",
-                    InsertionTime = DateTime.Now,
-                    Name = "Albert Pie",
-                    NickName = "Alpie",
-                    ProfileImagePath = "pic_profile.png"
-                },
-                new ProfileModel()
-                {
-                    Id = 4,
-                    Description = "This is the description of th 4th item.",
-                    InsertionTime = DateTime.Now,
-                    Name = "Владислав Особый",
-                    NickName = "ВладОс",
-                    ProfileImagePath = "pic_profile.png"
-                }
-            };
+            _profileService = profileService;
 
             EditCommand = new DelegateCommand<ProfileModel>(ExecuteEditCommand,
                 (arg) => arg != null);
@@ -166,10 +130,10 @@ namespace ProfileBook.ViewModels
             await NavigationService.NavigateAsync(nameof(AddEditProfilePage), parameters);
         }
 
-        private async void ExecuteDeleteCommand(object obj)
+        private async void ExecuteDeleteCommand(ProfileModel profile)
         {
             ConfirmConfig config = new ConfirmConfig()
-            { Message = $"Are you sure u want to delete {((ProfileModel)obj).NickName}?",
+            { Message = $"Are you sure u want to delete {profile.NickName}?",
                 CancelText = "No",
                 OkText = "Yes" };
 
@@ -177,7 +141,8 @@ namespace ProfileBook.ViewModels
 
             if (shouldDelete)
             {
-                Profiles.Remove((ProfileModel)obj);
+                await _profileService.DeleteItemAsync(profile);
+
                 UpdateList();
             }
         }
@@ -186,11 +151,12 @@ namespace ProfileBook.ViewModels
 
         #region --- Private Helpers ---
 
-        private void UpdateList()
+        private async void UpdateList()
         {
-            // todo: get profiles from db
+            var profiles = await _profileService.GetItemsAsync();
+            Profiles = new ObservableCollection<ProfileModel>(profiles);
 
-            if (Profiles.Count < 1)
+            if (Profiles.Count == 0)
             {
                 IsListVisible = false;
                 IsLabelVisible = true;

@@ -6,12 +6,17 @@ using System.Linq;
 using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Services.Authorization;
+using ProfileBook.Services.ProfileService;
 
 namespace ProfileBook.ViewModels
 {
     public class AddEditProfilePageViewModel : ViewModelBase
     {
         #region --- Private Fields ---
+
+        private readonly IProfileService _profileService;
+        private readonly IAuthorizationService _authorizationService;
 
         private DelegateCommand _saveCommand;
 
@@ -20,15 +25,19 @@ namespace ProfileBook.ViewModels
         private string _name;
         private string _nickName;
         private string _description;
+        private DateTime _insertionTime;
 
         #endregion
 
         #region --- Constructors ---
 
-        public AddEditProfilePageViewModel(INavigationService navigationService) :
+        public AddEditProfilePageViewModel(INavigationService navigationService,
+            IProfileService profileService,
+            IAuthorizationService authorizationService) :
             base(navigationService)
         {
-            Title = "Add/Edit Profile";
+            _profileService = profileService;
+            _authorizationService = authorizationService;
         }
 
         #endregion
@@ -68,6 +77,12 @@ namespace ProfileBook.ViewModels
             set => SetProperty(ref _description, value);
         }
 
+        public DateTime InsertionTime
+        {
+            get => _insertionTime;
+            set => SetProperty(ref _insertionTime, value);
+        }
+
         #endregion
 
         #region --- Overrides ---
@@ -78,15 +93,20 @@ namespace ProfileBook.ViewModels
             {
                 var profile = obj as ProfileModel;
 
-                ProfileId = profile?.Id ?? -1;
+                ProfileId = profile?.Id ?? 0;
                 ProfileImagePath = profile?.ProfileImagePath ?? "pic_profile.png";
                 Name = profile?.Name;
                 NickName = profile?.NickName;
                 Description = profile?.Description;
+                InsertionTime = profile?.InsertionTime ?? DateTime.Now;
+
+                Title = "Edit Profile";
             }
             else
             {
                 ProfileImagePath = "pic_profile.png";
+
+                Title = "Add Profile";
             }
         }
 
@@ -94,9 +114,47 @@ namespace ProfileBook.ViewModels
 
         #region --- Command Handlers ---
 
-        private void ExecuteSaveCommand()
+        private async void ExecuteSaveCommand()
         {
-            UserDialogs.Instance.Alert($"id: {ProfileId}\nимя: {Name} {NickName}\n{Description}\n{ProfileImagePath}");
+            if (CanSave())
+            {
+                var profile = new ProfileModel()
+                {
+                    Id = ProfileId,
+                    UserId = _authorizationService.CurrentUserId,
+                    Description = Description,
+                    ProfileImagePath = ProfileImagePath,
+                    NickName = NickName,
+                    Name = Name,
+                    InsertionTime = InsertionTime
+                };
+
+                if (profile.Id == 0)
+                {
+                    profile.InsertionTime = DateTime.Now;
+                    await _profileService.InsertItemAsync(profile);
+                }
+                else
+                {
+                    await _profileService.UpdateItemAsync(profile);
+                }
+
+                await NavigationService.GoBackAsync();
+            }
+            else
+            {
+                await UserDialogs.Instance.AlertAsync("Type both Name and Nickname!");
+            }
+        }
+
+        #endregion
+
+        #region --- Private Helpers ---
+
+        private bool CanSave()
+        {
+            return !string.IsNullOrEmpty(Name) &&
+                   !string.IsNullOrEmpty(NickName);
         }
 
         #endregion
