@@ -45,14 +45,8 @@ namespace ProfileBook.Services.Repository
             int result;
             try
             {
-                if (item.Id != 0)
-                {
-                    result = await _database.UpdateAsync(item);
-                }
-                else
-                {
-                    result = await _database.InsertAsync(item);
-                }
+                // exception will occur if we try to add a user that already exists (unique attribute)
+                result = await _database.InsertAsync(item);
             }
             catch (Exception e)
             {
@@ -70,7 +64,7 @@ namespace ProfileBook.Services.Repository
 
         public Task<int> DeleteItemAsync<T>(T item) where T : IEntityBase, new()
         {
-            return _database.DeleteAsync<T>(item);
+            return _database.DeleteAsync<T>(item.Id);
         }
 
         #endregion
