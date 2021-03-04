@@ -43,7 +43,8 @@
                 <Editor Text="{Binding Description}"
                         Placeholder="Description"
                         VerticalOptions="FillAndExpand"
-                        BackgroundColor="#EAEAEA"/>
+                        BackgroundColor="#EAEAEA"
+                        MaxLength="120"/>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

@@ -25,6 +25,11 @@ namespace ProfileBook.Services.ProfileService
             return _repository.GetItemsAsync<ProfileModel>();
         }
 
+        public Task<List<ProfileModel>> GetItemsAsync(Expression<Func<ProfileModel, bool>> predicate)
+        {
+            return _repository.GetItemsAsync(predicate);
+        }
+
         public Task<ProfileModel> GetItemAsync(int id)
         {
             return _repository.GetItemAsync<ProfileModel>(id);

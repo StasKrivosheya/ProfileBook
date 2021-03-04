@@ -11,6 +11,7 @@ namespace ProfileBook.Services.Repository
         Task CreateTableAsync<T>() where T : IEntityBase, new();
         
         Task<List<T>> GetItemsAsync<T>() where T : IEntityBase, new();
+        Task<List<T>> GetItemsAsync<T>(Expression<Func<T, bool>> predicate) where T : IEntityBase, new();
 
         Task<T> GetItemAsync<T>(int id) where T : IEntityBase, new();
         Task<T> GetItemAsync<T>(Expression<Func<T, bool>> predicate) where T : IEntityBase, new();

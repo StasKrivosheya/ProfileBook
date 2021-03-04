@@ -153,7 +153,8 @@ namespace ProfileBook.ViewModels
 
         private async void UpdateList()
         {
-            var profiles = await _profileService.GetItemsAsync();
+            var profiles = await _profileService.GetItemsAsync(
+                profile => profile.UserId == _authorizationService.CurrentUserId);
             Profiles = new ObservableCollection<ProfileModel>(profiles);
 
             if (Profiles.Count == 0)

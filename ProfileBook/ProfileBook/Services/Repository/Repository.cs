@@ -30,6 +30,11 @@ namespace ProfileBook.Services.Repository
             return _database.Table<T>().ToListAsync();
         }
 
+        public Task<List<T>> GetItemsAsync<T>(Expression<Func<T, bool>> predicate) where T : IEntityBase, new()
+        {
+            return _database.Table<T>().Where(predicate).ToListAsync();
+        }
+
         public Task<T> GetItemAsync<T>(int id) where T : IEntityBase, new()
         {
             return _database.GetAsync<T>(id);
