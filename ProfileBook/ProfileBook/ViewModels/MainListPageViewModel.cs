@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Xamarin.Forms;
 using Prism.Commands;
-using Acr.UserDialogs;
 using Prism.Navigation;
+using ProfileBook.Views;
 using ProfileBook.Models;
 using ProfileBook.Services.Authorization;
-using ProfileBook.Services.Settings;
-using ProfileBook.Views;
-using Xamarin.Forms;
+using Acr.UserDialogs;
 
 namespace ProfileBook.ViewModels
 {
@@ -20,6 +19,7 @@ namespace ProfileBook.ViewModels
         private DelegateCommand _logOutCommand;
         private DelegateCommand _settingsTapCommand;
         private DelegateCommand _addCommand;
+        private DelegateCommand _editCommand;
 
         private ObservableCollection<ProfileModel> _profiles;
 
@@ -33,7 +33,6 @@ namespace ProfileBook.ViewModels
         #region --- Constructors ---
 
         public MainListPageViewModel(INavigationService navigationService,
-            ISettingsManager settingsManager,
             IAuthorizationService authorizationService) :
             base(navigationService)
         {
@@ -45,6 +44,7 @@ namespace ProfileBook.ViewModels
             {
                 new ProfileModel()
                 {
+                    Id = 1,
                     Description = "This is the description of th 1st item.",
                     InsertionTime = DateTime.Now,
                     Name = "Ivan Lollipop",
@@ -53,6 +53,7 @@ namespace ProfileBook.ViewModels
                 },
                 new ProfileModel()
                 {
+                    Id = 2,
                     Description = "This is the description of th 2nd item.",
                     InsertionTime = DateTime.Now,
                     Name = "Rost Oreo",
@@ -61,24 +62,29 @@ namespace ProfileBook.ViewModels
                 },
                 new ProfileModel()
                 {
+                    Id = 3,
                     Description = "This is the description of th 3rd item.",
                     InsertionTime = DateTime.Now,
                     Name = "Albert Pie",
                     NickName = "Alpie",
                     ProfileImagePath = "pic_profile.png"
+                },
+                new ProfileModel()
+                {
+                    Id = 4,
+                    Description = "This is the description of th 4th item.",
+                    InsertionTime = DateTime.Now,
+                    Name = "Владислав Особый",
+                    NickName = "ВладОс",
+                    ProfileImagePath = "pic_profile.png"
                 }
             };
 
-            if (Profiles.Count < 1)
-            {
-                IsListVisible = false;
-                IsLabelVisible = true;
-            }
-            else
-            {
-                IsListVisible = true;
-                IsLabelVisible = false;
-            }
+            EditCommand = new DelegateCommand<ProfileModel>(ExecuteEditCommand,
+                (arg) => arg != null);
+
+            DeleteCommand = new DelegateCommand<ProfileModel>(ExecuteDeleteCommand,
+                (arg) => arg != null);
         }
 
         #endregion
@@ -94,6 +100,10 @@ namespace ProfileBook.ViewModels
 
         public DelegateCommand AddCommand =>
             _addCommand ?? (_addCommand = new DelegateCommand(ExecuteAddCommand));
+
+        public DelegateCommand<ProfileModel> EditCommand { get; private set; }
+
+        public DelegateCommand<ProfileModel> DeleteCommand { get; private set; }
 
         public ObservableCollection<ProfileModel> Profiles
         {
@@ -121,6 +131,15 @@ namespace ProfileBook.ViewModels
 
         #endregion
 
+        #region --- Overrides ---
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            UpdateList();
+        }
+
+        #endregion
+
         #region --- Command Handlers ---
 
         private void ExecuteLogOutCommand()
@@ -135,15 +154,52 @@ namespace ProfileBook.ViewModels
             UserDialogs.Instance.Alert("Settings page hasn't been implemented yet.", "Oops");
         }
 
-        private void ExecuteAddCommand()
+        private async void ExecuteAddCommand()
         {
-            Profiles.Add(new ProfileModel()
+            await NavigationService.NavigateAsync(nameof(AddEditProfilePage));
+        }
+
+        private async void ExecuteEditCommand(object obj)
+        {
+            var parameters = new NavigationParameters {{nameof(ProfileModel), obj}};
+
+            await NavigationService.NavigateAsync(nameof(AddEditProfilePage), parameters);
+        }
+
+        private async void ExecuteDeleteCommand(object obj)
+        {
+            ConfirmConfig config = new ConfirmConfig()
+            { Message = $"Are you sure u want to delete {((ProfileModel)obj).NickName}?",
+                CancelText = "No",
+                OkText = "Yes" };
+
+            var shouldDelete = await UserDialogs.Instance.ConfirmAsync(config);
+
+            if (shouldDelete)
             {
-                Name = "New Item",
-                NickName = "Newbie",
-                InsertionTime = DateTime.Now,
-                ProfileImagePath = "pic_profile.png"
-            });
+                Profiles.Remove((ProfileModel)obj);
+                UpdateList();
+            }
+        }
+
+        #endregion
+
+        #region --- Private Helpers ---
+
+        private void UpdateList()
+        {
+            // todo: get profiles from db
+
+            if (Profiles.Count < 1)
+            {
+                IsListVisible = false;
+                IsLabelVisible = true;
+            }
+            else
+            {
+                IsListVisible = true;
+                IsLabelVisible = false;
+            }
         }
 
         #endregion

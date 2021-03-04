@@ -4,7 +4,8 @@
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ProfileBook.Views.MainListPage"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             x:Name="this">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding LogOutCommand}"
@@ -31,8 +32,15 @@
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.ContextActions>
-                                    <MenuItem Text="Edit"/>
-                                    <MenuItem Text="Delete"/>
+                                    <MenuItem Command="{Binding BindingContext.EditCommand,
+                                        Source={x:Reference this}}"
+                                              CommandParameter="{Binding .}"
+                                              Text="Edit"/> 
+
+                                    <MenuItem Command="{Binding BindingContext.DeleteCommand,
+                                        Source={x:Reference this}}"
+                                              CommandParameter="{Binding .}"
+                                              Text="Delete"/>
                                 </ViewCell.ContextActions>
                                 <ViewCell.View>
                                     <Grid Padding="15">
@@ -44,7 +52,8 @@
                                                Source="{Binding ProfileImagePath}"
                                                HeightRequest="70"/>
 
-                                        <StackLayout Grid.Column="1" Margin="10, 0">
+                                        <StackLayout Grid.Column="1"
+                                                     Margin="10, 0">
                                             <Label Text="{Binding NickName}"
                                                    FontAttributes="Bold"/>
                                             <Label Text="{Binding Name}"/>
