@@ -3,6 +3,7 @@ using Prism;
 using Prism.Ioc;
 using Prism.Unity;
 using ProfileBook.Services.Authorization;
+using ProfileBook.Services.ProfileService;
 using ProfileBook.Services.Repository;
 using ProfileBook.Services.Settings;
 using ProfileBook.Services.UserService;
@@ -56,6 +57,7 @@ namespace ProfileBook
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<IUserService>(Container.Resolve<UserService>());
+            containerRegistry.RegisterInstance<IProfileService>(Container.Resolve<ProfileService>());
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
