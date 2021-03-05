@@ -13,9 +13,9 @@ namespace ProfileBook.Services.Authorization
 
         #region --- Interface Implementation ---
 
-        public bool Authorized => _settingsManager.RememberedUserLogin != string.Empty;
+        public bool IsAuthorized => _settingsManager.RememberedUserLogin != string.Empty;
 
-        public int CurrentUserId => Authorized ? _settingsManager.RememberedUserId : -1;
+        public int CurrentUserId => IsAuthorized ? _settingsManager.RememberedUserId : -1;
 
         public void Authorize(int id, string login)
         {

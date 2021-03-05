@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 using Xamarin.Forms;
 using Prism.Commands;
 using Prism.Navigation;
@@ -58,7 +58,6 @@ namespace ProfileBook.ViewModels
         public DelegateCommand LogOutCommand =>
             _logOutCommand ?? (_logOutCommand = new DelegateCommand(ExecuteLogOutCommand));
 
-
         public DelegateCommand SettingsTapCommand =>
             _settingsTapCommand ?? (_settingsTapCommand = new DelegateCommand(ExecuteSettingsTapCommand));
 
@@ -113,9 +112,9 @@ namespace ProfileBook.ViewModels
             NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInPage)}");
         }
 
-        private void ExecuteSettingsTapCommand()
+        private async void ExecuteSettingsTapCommand()
         {
-            UserDialogs.Instance.Alert("Settings page hasn't been implemented yet.", "Oops");
+            await UserDialogs.Instance.AlertAsync("Settings page hasn't been implemented yet.", "Oops");
         }
 
         private async void ExecuteAddCommand()
@@ -123,19 +122,21 @@ namespace ProfileBook.ViewModels
             await NavigationService.NavigateAsync(nameof(AddEditProfilePage));
         }
 
-        private async void ExecuteEditCommand(object obj)
+        private async void ExecuteEditCommand(ProfileModel profile)
         {
-            var parameters = new NavigationParameters {{nameof(ProfileModel), obj}};
+            var parameters = new NavigationParameters {{nameof(ProfileModel), profile } };
 
             await NavigationService.NavigateAsync(nameof(AddEditProfilePage), parameters);
         }
 
         private async void ExecuteDeleteCommand(ProfileModel profile)
         {
-            ConfirmConfig config = new ConfirmConfig()
-            { Message = $"Are you sure u want to delete {profile.NickName}?",
+            ConfirmConfig config = new ConfirmConfig
+            { 
+                Message = $"Are you sure u want to delete {profile.NickName}?",
                 CancelText = "No",
-                OkText = "Yes" };
+                OkText = "Yes"
+            };
 
             var shouldDelete = await UserDialogs.Instance.ConfirmAsync(config);
 
@@ -155,18 +156,11 @@ namespace ProfileBook.ViewModels
         {
             var profiles = await _profileService.GetItemsAsync(
                 profile => profile.UserId == _authorizationService.CurrentUserId);
+
             Profiles = new ObservableCollection<ProfileModel>(profiles);
 
-            if (Profiles.Count == 0)
-            {
-                IsListVisible = false;
-                IsLabelVisible = true;
-            }
-            else
-            {
-                IsListVisible = true;
-                IsLabelVisible = false;
-            }
+            IsLabelVisible = !Profiles.Any();
+            IsListVisible = Profiles.Any();
         }
 
         #endregion

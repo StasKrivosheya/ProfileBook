@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
@@ -9,7 +8,6 @@ using ProfileBook.Services.Settings;
 using ProfileBook.Services.UserService;
 using ProfileBook.ViewModels;
 using ProfileBook.Views;
-using Xamarin.Essentials;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -34,14 +32,14 @@ namespace ProfileBook
         {
             InitializeComponent();
 
-            if (AuthorizationService.Authorized)
+            if (AuthorizationService.IsAuthorized)
             {
-                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}" +
+                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}" +
                                                       $"/{nameof(MainListPage)}");
             }
             else
             {
-                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}" +
+                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}" +
                                                       $"/{nameof(SignInPage)}");
             }
             

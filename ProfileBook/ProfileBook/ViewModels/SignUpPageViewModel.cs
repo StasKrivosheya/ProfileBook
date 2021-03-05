@@ -1,8 +1,8 @@
-﻿using Prism.Commands;
+﻿using System.ComponentModel;
+using Prism.Commands;
 using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Models;
-using ProfileBook.Services.Repository;
 using ProfileBook.Services.UserService;
 using ProfileBook.Validators;
 
@@ -62,21 +62,27 @@ namespace ProfileBook.ViewModels
         public string Password
         {
             get => _password;
-            set
-            {
-                SetProperty(ref _password, value);
-
-                UpdateSignUpButtonState();
-            }
+            set => SetProperty(ref _password, value);
         }
 
         public string ConfirmPassword
         {
             get => _confirmPassword;
-            set
-            {
-                SetProperty(ref _confirmPassword, value);
+            set => SetProperty(ref _confirmPassword, value);
+        }
 
+        #endregion
+
+        #region --- Overrides ---
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            if (args.PropertyName == nameof(Password) ||
+                args.PropertyName == nameof(ConfirmPassword) ||
+                args.PropertyName == nameof(Login))
+            {
                 UpdateSignUpButtonState();
             }
         }
@@ -106,8 +112,13 @@ namespace ProfileBook.ViewModels
                 }
                 else
                 {
-                    int result = await _userService.InsertItemAsync(new UserModel()
-                    { Login = Login, Password = Password });
+                    var userModel = new UserModel
+                    {
+                        Login = Login,
+                        Password = Password
+                    };
+
+                    var result = await _userService.InsertItemAsync(userModel);
 
                     if (result == -1)
                     {

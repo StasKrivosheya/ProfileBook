@@ -1,8 +1,5 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Models;
@@ -83,16 +80,17 @@ namespace ProfileBook.ViewModels
             set => SetProperty(ref _insertionTime, value);
         }
 
+        public bool CanSave => !string.IsNullOrEmpty(Name) &&
+                               !string.IsNullOrEmpty(NickName);
+
         #endregion
 
         #region --- Overrides ---
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.TryGetValue(nameof(ProfileModel), out object obj))
+            if (parameters.TryGetValue(nameof(ProfileModel), out ProfileModel profile))
             {
-                var profile = obj as ProfileModel;
-
                 ProfileId = profile?.Id ?? 0;
                 ProfileImagePath = profile?.ProfileImagePath ?? "pic_profile.png";
                 Name = profile?.Name;
@@ -116,9 +114,9 @@ namespace ProfileBook.ViewModels
 
         private async void ExecuteSaveCommand()
         {
-            if (CanSave())
+            if (CanSave)
             {
-                var profile = new ProfileModel()
+                var profile = new ProfileModel
                 {
                     Id = ProfileId,
                     UserId = _authorizationService.CurrentUserId,
@@ -145,16 +143,6 @@ namespace ProfileBook.ViewModels
             {
                 await UserDialogs.Instance.AlertAsync("Type both Name and Nickname!");
             }
-        }
-
-        #endregion
-
-        #region --- Private Helpers ---
-
-        private bool CanSave()
-        {
-            return !string.IsNullOrEmpty(Name) &&
-                   !string.IsNullOrEmpty(NickName);
         }
 
         #endregion

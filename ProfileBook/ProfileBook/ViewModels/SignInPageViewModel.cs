@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using System.ComponentModel;
+using Prism.Commands;
 using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Services.Authorization;
@@ -60,21 +61,13 @@ namespace ProfileBook.ViewModels
         public string Login
         {
             get => _login;
-            set
-            {
-                SetProperty(ref _login, value);
-                UpdateSignInButtonState();
-            }
+            set => SetProperty(ref _login, value);
         }
 
         public string Password
         {
             get => _password;
-            set
-            {
-                SetProperty(ref _password, value);
-                UpdateSignInButtonState();
-            }
+            set => SetProperty(ref _password, value);
         }
 
         #endregion
@@ -87,6 +80,17 @@ namespace ProfileBook.ViewModels
             {
                 Login = login;
                 Password = string.Empty;
+            }
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            if (args.PropertyName == nameof(Password) ||
+                args.PropertyName == nameof(Login))
+            {
+                UpdateSignInButtonState();
             }
         }
 

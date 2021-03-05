@@ -2,7 +2,7 @@
 {
     public interface IAuthorizationService
     {
-        bool Authorized { get; }
+        bool IsAuthorized { get; }
 
         int CurrentUserId { get; }
 

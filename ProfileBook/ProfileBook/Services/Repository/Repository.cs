@@ -42,7 +42,7 @@ namespace ProfileBook.Services.Repository
 
         public Task<T> GetItemAsync<T>(Expression<Func<T, bool>> predicate) where T : IEntityBase, new()
         {
-            return _database.FindAsync<T>(predicate);
+            return _database.FindAsync(predicate);
         }
 
         public async Task<int> InsertItemAsync<T>(T item) where T : IEntityBase, new()
