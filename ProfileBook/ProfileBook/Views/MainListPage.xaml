@@ -45,8 +45,8 @@
                                 <ViewCell.View>
                                     <Grid Padding="15">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="2*"/>
                                         </Grid.ColumnDefinitions>
                                         <Image Grid.Column="0"
                                                Source="{Binding ProfileImagePath}"

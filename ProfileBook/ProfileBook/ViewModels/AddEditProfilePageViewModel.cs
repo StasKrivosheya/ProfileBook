@@ -5,6 +5,7 @@ using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services.Authorization;
 using ProfileBook.Services.ProfileService;
+using Xamarin.Essentials;
 
 namespace ProfileBook.ViewModels
 {
@@ -16,6 +17,7 @@ namespace ProfileBook.ViewModels
         private readonly IAuthorizationService _authorizationService;
 
         private DelegateCommand _saveCommand;
+        private DelegateCommand _imageTapCommand;
 
         private int _profileId;
         private string _profileImagePath;
@@ -43,6 +45,9 @@ namespace ProfileBook.ViewModels
 
         public DelegateCommand SaveCommand =>
             _saveCommand ?? (_saveCommand = new DelegateCommand(ExecuteSaveCommand));
+
+        public DelegateCommand ImageTapCommand =>
+            _imageTapCommand ?? (_imageTapCommand = new DelegateCommand(ExecuteImageTapCommand));
 
         public int ProfileId
         {
@@ -143,6 +148,56 @@ namespace ProfileBook.ViewModels
             {
                 await UserDialogs.Instance.AlertAsync("Type both Name and Nickname!");
             }
+        }
+
+        private void ExecuteImageTapCommand()
+        {
+            UserDialogs.Instance.ActionSheet(new ActionSheetConfig()
+                .SetTitle("Choose Type")
+                .Add("Camera", PickFromCamera, "ic_camera_alt_black.png")
+                .Add("Gallery", PickFromGallery, "ic_collections_black.png")
+            );
+        }
+
+        #endregion
+
+        #region --- Private Helpers ---
+
+        private async void PickFromGallery()
+        {
+            if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() != PermissionStatus.Granted)
+            {
+                await Permissions.RequestAsync<Permissions.StorageRead>();
+            }
+
+            var photo = await MediaPicker.PickPhotoAsync();
+
+            if (photo == null)
+            {
+                return;
+            }
+
+            ProfileImagePath = photo.FullPath;
+        }
+
+        private async void PickFromCamera()
+        {
+            if (await Permissions.CheckStatusAsync<Permissions.Camera>() != PermissionStatus.Granted)
+            {
+                await Permissions.RequestAsync<Permissions.Camera>();
+            }
+
+            var photo = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
+            {
+                Title = $"ProfileBook{DateTime.Now:dd-MM-yyyy_hh.mm.ss}.jpg"
+            });
+
+            if (photo == null)
+            {
+                return;
+            }
+
+            ProfileImagePath = photo.FullPath;
         }
 
         #endregion
