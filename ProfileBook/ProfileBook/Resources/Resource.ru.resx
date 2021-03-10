@@ -136,7 +136,7 @@
     <value>Камера</value>
   </data>
   <data name="CancelText" xml:space="preserve">
-    <value>Отмена</value>
+    <value>Отменна</value>
   </data>
   <data name="ChooseFrom" xml:space="preserve">
     <value>Выберите из следующих</value>
@@ -160,17 +160,17 @@
     <value>Редактировать</value>
   </data>
   <data name="EditProfileTitle" xml:space="preserve">
-    <value>Редактирование профиля</value>
+    <value>Изменение профиля</value>
   </data>
   <data name="Gallery" xml:space="preserve">
-    <value>Галлерея</value>
+    <value>Галерея</value>
   </data>
   <data name="InvalidLoginMessage" xml:space="preserve">
     <value>Первая буква не должна быть цифровой.
 Длина логина должна быть от 4 до 16 символов.</value>
   </data>
   <data name="InvalidLoginTitle" xml:space="preserve">
-    <value>Плохой логин!</value>
+    <value>Логин не подходит!</value>
   </data>
   <data name="InvalidPasswordMessage" xml:space="preserve">
     <value>Используйте как минимум 1 цифру.
@@ -179,7 +179,7 @@
 Длина пароля должна быть от 8 до 16 символов.</value>
   </data>
   <data name="InvalidPasswordTitle" xml:space="preserve">
-    <value>Плохой пароль!</value>
+    <value>Пароль не подходит!</value>
   </data>
   <data name="LanguageTitle" xml:space="preserve">
     <value>Выберите предпочтительный язык</value>
@@ -191,7 +191,7 @@
     <value>Логин</value>
   </data>
   <data name="LogOutText" xml:space="preserve">
-    <value>Выйти</value>
+    <value>Выход</value>
   </data>
   <data name="NamePlaceholder" xml:space="preserve">
     <value>Имя</value>
@@ -200,7 +200,7 @@
     <value>Псевдоним</value>
   </data>
   <data name="NoProfilesText" xml:space="preserve">
-    <value>Нет добавленных профилей.</value>
+    <value>Нет добавленных профилей</value>
   </data>
   <data name="OkText" xml:space="preserve">
     <value>Ок</value>
@@ -212,10 +212,10 @@
     <value>Вы уверены, что хотите удалить</value>
   </data>
   <data name="RegisterFailedMessage" xml:space="preserve">
-    <value>Такой пользователь уже зарегистрирован!</value>
+    <value>Такой пользователь уже существует!</value>
   </data>
   <data name="RegisterFailedTitle" xml:space="preserve">
-    <value>Ошибка при регистрации</value>
+    <value>Ошибка регистрации!</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
@@ -224,14 +224,14 @@
     <value>Настройки</value>
   </data>
   <data name="SignInButton" xml:space="preserve">
-    <value>Войти</value>
+    <value>Вход</value>
   </data>
   <data name="SignInErrorMessage" xml:space="preserve">
     <value>Пожалуйста, проверьте введенные данные и повторите попытку.
 Или зарегистрируйтесь, если вы еще этого не сделали.</value>
   </data>
   <data name="SignInErrorTitle" xml:space="preserve">
-    <value>Неправильный логин или пароль!</value>
+    <value>Неверный логин или пароль!</value>
   </data>
   <data name="SignInTitle" xml:space="preserve">
     <value>Вход</value>
@@ -240,13 +240,16 @@
     <value>Зарегистрироваться</value>
   </data>
   <data name="SignUpLink" xml:space="preserve">
-    <value>РЕГИСТРАЦИЯ</value>
+    <value>Регистрация</value>
   </data>
   <data name="SignUpTitle" xml:space="preserve">
     <value>Регистрация</value>
   </data>
   <data name="SortTitle" xml:space="preserve">
     <value>Выберите опцию сортировки</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>Login length must be from 4 to 16 characters.</value>
   </data>
   <data name="YesText" xml:space="preserve">
     <value>Да</value>

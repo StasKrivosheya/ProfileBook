@@ -39,7 +39,7 @@ namespace ProfileBook.ViewModels
             IProfileService profileService) :
             base(navigationService)
         {
-            Title = "List View";
+            Title = Resource.ListViewTitle;
 
             _authorizationService = authorizationService;
 
