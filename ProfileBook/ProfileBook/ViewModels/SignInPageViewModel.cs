@@ -2,6 +2,7 @@
 using Prism.Commands;
 using Acr.UserDialogs;
 using Prism.Navigation;
+using ProfileBook.Resources;
 using ProfileBook.Services.Authorization;
 using ProfileBook.Services.UserService;
 using ProfileBook.Views;
@@ -33,7 +34,7 @@ namespace ProfileBook.ViewModels
             IAuthorizationService authorizationService) :
             base(navigationService)
         {
-            Title = "Users SignIn";
+            Title = Resource.SignInTitle;
 
             _userService = userService;
 
@@ -117,9 +118,8 @@ namespace ProfileBook.ViewModels
             }
             else
             {
-                UserDialogs.Instance.Alert("Please, check your inputs and retry.\n" +
-                                           "Or register if you haven't done it yet!",
-                    "Invalid login or password", "OK");
+                await UserDialogs.Instance.AlertAsync(Resource.SignInErrorMessage,
+                    Resource.SignInErrorTitle, Resource.OkText);
                 Password = string.Empty;
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Prism.Navigation;
+using ProfileBook.Resources;
 
 namespace ProfileBook.ViewModels
 {
@@ -22,7 +23,7 @@ namespace ProfileBook.ViewModels
         public SettingsPageViewModel(INavigationService navigationService) :
             base(navigationService)
         {
-            Title = "Settings";
+            Title = Resource.Settings;
         }
 
         #endregion

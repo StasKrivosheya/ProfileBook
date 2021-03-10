@@ -3,6 +3,7 @@ using System;
 using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Resources;
 using ProfileBook.Services.Authorization;
 using ProfileBook.Services.ProfileService;
 using Xamarin.Essentials;
@@ -97,19 +98,19 @@ namespace ProfileBook.ViewModels
             if (parameters.TryGetValue(nameof(ProfileModel), out ProfileModel profile))
             {
                 ProfileId = profile?.Id ?? 0;
-                ProfileImagePath = profile?.ProfileImagePath ?? "pic_profile.png";
+                ProfileImagePath = profile?.ProfileImagePath ?? Constants.DEFAULT_PROFILE_PIC;
                 Name = profile?.Name;
                 NickName = profile?.NickName;
                 Description = profile?.Description;
                 InsertionTime = profile?.InsertionTime ?? DateTime.Now;
 
-                Title = "Edit Profile";
+                Title = Resource.EditProfileTitle;
             }
             else
             {
-                ProfileImagePath = "pic_profile.png";
+                ProfileImagePath = Constants.DEFAULT_PROFILE_PIC;
 
-                Title = "Add Profile";
+                Title = Resource.AddProfileTitle;
             }
         }
 
@@ -146,16 +147,16 @@ namespace ProfileBook.ViewModels
             }
             else
             {
-                await UserDialogs.Instance.AlertAsync("Type both Name and Nickname!");
+                await UserDialogs.Instance.AlertAsync(Resource.AddEditAlert);
             }
         }
 
         private void ExecuteImageTapCommand()
         {
             UserDialogs.Instance.ActionSheet(new ActionSheetConfig()
-                .SetTitle("Choose Type")
-                .Add("Camera", PickFromCamera, "ic_camera_alt_black.png")
-                .Add("Gallery", PickFromGallery, "ic_collections_black.png")
+                .SetTitle(Resource.ChooseFrom)
+                .Add(Resource.Camera, PickFromCamera, "ic_camera_alt_black.png")
+                .Add(Resource.Gallery, PickFromGallery, "ic_collections_black.png")
             );
         }
 

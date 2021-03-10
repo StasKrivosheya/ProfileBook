@@ -7,6 +7,7 @@ using ProfileBook.Views;
 using ProfileBook.Models;
 using ProfileBook.Services.Authorization;
 using Acr.UserDialogs;
+using ProfileBook.Resources;
 using ProfileBook.Services.ProfileService;
 
 namespace ProfileBook.ViewModels
@@ -133,9 +134,9 @@ namespace ProfileBook.ViewModels
         {
             ConfirmConfig config = new ConfirmConfig
             { 
-                Message = $"Are you sure u want to delete {profile.NickName}?",
-                CancelText = "No",
-                OkText = "Yes"
+                Message = $"{Resource.ProfileDeletionConfirm} {profile.NickName}?",
+                CancelText = Resource.CancelText,
+                OkText = Resource.YesText
             };
 
             var shouldDelete = await UserDialogs.Instance.ConfirmAsync(config);

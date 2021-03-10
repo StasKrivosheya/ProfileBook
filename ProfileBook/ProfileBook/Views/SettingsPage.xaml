@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
+             xmlns:resource="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ProfileBook.Views.SettingsPage"
              Title="{Binding Title}">
@@ -14,28 +15,28 @@
 
         <StackLayout Grid.Row="0"
                      RadioButtonGroup.GroupName="sort">
-            <Label Text="Choose Sort option"
+            <Label Text="{x:Static resource:Resource.SortTitle}"
                     FontSize="Title"/>
 
-            <RadioButton Content="By Name"
+            <RadioButton Content="{x:Static resource:Resource.ByName}"
                          IsChecked="{Binding IsSortByName}"/>
 
-            <RadioButton Content="By NickName"
+            <RadioButton Content="{x:Static resource:Resource.ByNickName}"
                          IsChecked="{Binding IsSortByNickName}"/>
 
-            <RadioButton Content="By Date"
+            <RadioButton Content="{x:Static resource:Resource.ByDate}"
                          IsChecked="{Binding IsSortByDate}"/>
 
         </StackLayout>
 
         <StackLayout Grid.Row="1">
-            <Label Text="Enable Dark Theme"
+            <Label Text="{x:Static resource:Resource.DarkThemeTitle}"
                    FontSize="Title"/>
             <CheckBox IsChecked="{Binding IsDarkTheme}"/>
         </StackLayout>
 
         <StackLayout Grid.Row="2">
-            <Label Text="Choose Preferred Language"
+            <Label Text="{x:Static resource:Resource.LanguageTitle}"
                    FontSize="Title"/>
 
             <Picker SelectedItem="{Binding SelectedLanguage}">

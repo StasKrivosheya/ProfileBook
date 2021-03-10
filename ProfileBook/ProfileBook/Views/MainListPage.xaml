@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:resource="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ProfileBook.Views.MainListPage"
              Title="{Binding Title}"
@@ -10,11 +11,11 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding LogOutCommand}"
-                     Text="Log out"
+                     Text="{x:Static resource:Resource.LogOutText}"
                      IconImageSource="ic_exit_to_app.png"
                      Order="Primary"/>
         <ToolbarItem Command="{Binding SettingsTapCommand}"
-                     Text="Settings"
+                     Text="{x:Static resource:Resource.Settings}"
                      IconImageSource="ic_settings.png"
                      Order="Primary"/>
     </ContentPage.ToolbarItems>
@@ -36,12 +37,12 @@
                                     <MenuItem Command="{Binding BindingContext.EditCommand,
                                         Source={x:Reference this}}"
                                               CommandParameter="{Binding .}"
-                                              Text="Edit"/> 
+                                              Text="{x:Static resource:Resource.Edit}"/> 
 
                                     <MenuItem Command="{Binding BindingContext.DeleteCommand,
                                         Source={x:Reference this}}"
                                               CommandParameter="{Binding .}"
-                                              Text="Delete"/>
+                                              Text="{x:Static resource:Resource.Delete}"/>
                                 </ViewCell.ContextActions>
                                 <ViewCell.View>
                                     <Grid Padding="15">
@@ -73,7 +74,7 @@
                 </ListView>
 
                 <Label IsVisible="{Binding IsLabelVisible}"
-                       Text="No profiles added."
+                       Text="{x:Static resource:Resource.NoProfilesText}"
                        VerticalOptions="CenterAndExpand"
                        HorizontalOptions="CenterAndExpand"/>
             </StackLayout>

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
+             xmlns:resource="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ProfileBook.Views.SignUpPage"
              Title="{Binding Title}">
@@ -9,20 +10,20 @@
     <StackLayout Padding="40">
         <StackLayout VerticalOptions="CenterAndExpand">
             <Entry Text="{Binding Login}"
-                   Placeholder="Login" />
+                   Placeholder="{x:Static resource:Resource.LoginPlaceholder}" />
 
             <Entry Text="{Binding Password}"
-                   Placeholder="Password"
+                   Placeholder="{x:Static resource:Resource.PasswordPlaceholder}"
                    IsPassword="True" />
 
             <Entry Text="{Binding ConfirmPassword}"
-                   Placeholder="Confirm password"
+                   Placeholder="{x:Static resource:Resource.ConfirmPasswordPlaceholder}"
                    IsPassword="True" />
         </StackLayout>
         <StackLayout VerticalOptions="CenterAndExpand">
             <Button Command="{Binding SignUpCommand}"
                     IsEnabled="{Binding IsEnabled}"
-                    Text="sign up"
+                    Text="{x:Static resource:Resource.SignUpButton}"
                     BackgroundColor="DarkOrange"
                     BorderColor="Black"
                     BorderWidth="1" />

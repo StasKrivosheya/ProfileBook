@@ -3,6 +3,7 @@ using Prism.Commands;
 using Acr.UserDialogs;
 using Prism.Navigation;
 using ProfileBook.Models;
+using ProfileBook.Resources;
 using ProfileBook.Services.UserService;
 using ProfileBook.Validators;
 
@@ -30,7 +31,7 @@ namespace ProfileBook.ViewModels
             IUserService userService) :
             base(navigationService)
         {
-            Title = "Users SignUp";
+            Title = Resource.SignUpTitle;
 
             _userService = userService;
         }
@@ -100,15 +101,13 @@ namespace ProfileBook.ViewModels
 
                 if (!loginValid)
                 {
-                    UserDialogs.Instance.Alert("First letter must be non-digit.\n" +
-                                               "Login length must be from 4 to 16 characters", "Invalid login!");
+                    UserDialogs.Instance.Alert(Resource.InvalidLoginMessage,
+                        Resource.InvalidLoginTitle, Resource.OkText);
                 }
                 else if (!passwordValid)
                 {
-                    UserDialogs.Instance.Alert("Use at least 1 digit.\n" +
-                                               "Use at least 1 lowercase letter.\n" +
-                                               "Use at least 1 uppercase letter.\n" +
-                                               "Password length must be from 8 to 16 characters.", "Invalid password!");
+                    UserDialogs.Instance.Alert(Resource.InvalidPasswordMessage,
+                        Resource.InvalidPasswordTitle, Resource.OkText);
                 }
                 else
                 {
@@ -122,13 +121,11 @@ namespace ProfileBook.ViewModels
 
                     if (result == -1)
                     {
-                        UserDialogs.Instance.Alert("Such user already exists!", "Register failed!");
+                        UserDialogs.Instance.Alert(Resource.RegisterFailedMessage,
+                            Resource.RegisterFailedTitle, Resource.OkText);
                     }
                     else
                     {
-                        UserDialogs.Instance.Alert($"Dear {Login}, you've been successfully register!\n" +
-                                                   $"Sign in to continue.", "Successfully registered!", "OK");
-
                         var parameters = new NavigationParameters { { nameof(Login), Login } };
                         await NavigationService.GoBackAsync(parameters);
                     }
@@ -136,7 +133,8 @@ namespace ProfileBook.ViewModels
             }
             else
             {
-                UserDialogs.Instance.Alert("Passwords are different!");
+                UserDialogs.Instance.Alert(Resource.DifferentPasswordError,
+                    Resource.DifferentPasswordError, Resource.OkText);
             }
         }
 
