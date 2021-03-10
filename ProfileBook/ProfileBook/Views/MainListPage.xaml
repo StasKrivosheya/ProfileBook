@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ProfileBook.Views.MainListPage"
              Title="{Binding Title}"
@@ -48,9 +49,13 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="2*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Image Grid.Column="0"
-                                               Source="{Binding ProfileImagePath}"
-                                               HeightRequest="70"/>
+
+                                        <ffimageloading:CachedImage Grid.Column="0"
+                                                                    Source="{Binding ProfileImagePath}"
+                                                                    HeightRequest="70"
+                                                                    DownsampleToViewSize="True"
+                                                                    CacheDuration="14"
+                                                                    LoadingPlaceholder="pic_profile.png"/>
 
                                         <StackLayout Grid.Column="1"
                                                      Margin="10, 0">

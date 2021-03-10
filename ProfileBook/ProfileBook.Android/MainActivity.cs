@@ -22,6 +22,8 @@ namespace ProfileBook.Droid
             LoadApplication(new App(new AndroidInitializer()));
 
             UserDialogs.Init(this);
+
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
