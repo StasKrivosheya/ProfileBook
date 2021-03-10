@@ -114,7 +114,7 @@ namespace ProfileBook.ViewModels
 
         private async void ExecuteSettingsTapCommand()
         {
-            await UserDialogs.Instance.AlertAsync("Settings page hasn't been implemented yet.", "Oops");
+            await NavigationService.NavigateAsync(nameof(SettingsPage));
         }
 
         private async void ExecuteAddCommand()

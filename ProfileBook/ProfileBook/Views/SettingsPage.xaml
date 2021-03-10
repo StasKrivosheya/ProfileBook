@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="ProfileBook.Views.SettingsPage"
+             Title="{Binding Title}">
+    <Grid Padding="25" RowSpacing="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackLayout Grid.Row="0"
+                     RadioButtonGroup.GroupName="sort">
+            <Label Text="Choose Sort option"
+                    FontSize="Title"/>
+
+            <RadioButton Content="By Name"
+                         IsChecked="{Binding IsSortByName}"/>
+
+            <RadioButton Content="By NickName"
+                         IsChecked="{Binding IsSortByNickName}"/>
+
+            <RadioButton Content="By Date"
+                         IsChecked="{Binding IsSortByDate}"/>
+
+        </StackLayout>
+
+        <StackLayout Grid.Row="1">
+            <Label Text="Enable Dark Theme"
+                   FontSize="Title"/>
+            <CheckBox IsChecked="{Binding IsDarkTheme}"/>
+        </StackLayout>
+
+        <StackLayout Grid.Row="2">
+            <Label Text="Choose Preferred Language"
+                   FontSize="Title"/>
+
+            <Picker SelectedItem="{Binding SelectedLanguage}">
+                <Picker.Items>
+                    <x:String>English</x:String>
+                    <x:String>Russian</x:String>
+                </Picker.Items>
+            </Picker>
+        </StackLayout>
+
+    </Grid>
+  
+</ContentPage>

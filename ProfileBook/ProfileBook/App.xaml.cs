@@ -63,6 +63,7 @@ namespace ProfileBook
             containerRegistry.RegisterForNavigation<SignUpPage, SignUpPageViewModel>();
             containerRegistry.RegisterForNavigation<MainListPage, MainListPageViewModel>();
             containerRegistry.RegisterForNavigation<AddEditProfilePage, AddEditProfilePageViewModel>();
+            containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>();
         }
 
         #endregion
