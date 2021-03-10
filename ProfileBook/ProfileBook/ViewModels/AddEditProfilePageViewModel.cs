@@ -165,24 +165,24 @@ namespace ProfileBook.ViewModels
 
         private async void PickFromGallery()
         {
-            if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() != PermissionStatus.Granted)
+            var status = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+            if (status != PermissionStatus.Granted)
             {
                 await Permissions.RequestAsync<Permissions.StorageRead>();
             }
 
             var photo = await MediaPicker.PickPhotoAsync();
 
-            if (photo == null)
+            if (photo != null)
             {
-                return;
+                ProfileImagePath = photo.FullPath;
             }
-
-            ProfileImagePath = photo.FullPath;
         }
 
         private async void PickFromCamera()
         {
-            if (await Permissions.CheckStatusAsync<Permissions.Camera>() != PermissionStatus.Granted)
+            var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
+            if (status != PermissionStatus.Granted)
             {
                 await Permissions.RequestAsync<Permissions.Camera>();
             }
@@ -192,12 +192,10 @@ namespace ProfileBook.ViewModels
                 Title = $"ProfileBook{DateTime.Now:dd-MM-yyyy_hh.mm.ss}.jpg"
             });
 
-            if (photo == null)
+            if (photo != null)
             {
-                return;
+                ProfileImagePath = photo.FullPath;
             }
-
-            ProfileImagePath = photo.FullPath;
         }
 
         #endregion
