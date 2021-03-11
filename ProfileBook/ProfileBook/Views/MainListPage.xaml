@@ -3,19 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:resource="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ProfileBook.Views.MainListPage"
-             Title="{Binding Title}"
+             Title="{Binding Resources[ListViewTitle]}"
              x:Name="this">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding LogOutCommand}"
-                     Text="{x:Static resource:Resource.LogOutText}"
+                     Text="{Binding Resources[LogOutText]}"
                      IconImageSource="ic_exit_to_app.png"
                      Order="Primary"/>
         <ToolbarItem Command="{Binding SettingsTapCommand}"
-                     Text="{x:Static resource:Resource.Settings}"
+                     Text="{Binding Resources[Settings]}"
                      IconImageSource="ic_settings.png"
                      Order="Primary"/>
     </ContentPage.ToolbarItems>
@@ -37,12 +36,14 @@
                                     <MenuItem Command="{Binding BindingContext.EditCommand,
                                         Source={x:Reference this}}"
                                               CommandParameter="{Binding .}"
-                                              Text="{x:Static resource:Resource.Edit}"/> 
+                                              Text="{Binding BindingContext.Resources[Edit],
+                                        Source={x:Reference this}}"/> 
 
                                     <MenuItem Command="{Binding BindingContext.DeleteCommand,
                                         Source={x:Reference this}}"
                                               CommandParameter="{Binding .}"
-                                              Text="{x:Static resource:Resource.Delete}"/>
+                                              Text="{Binding BindingContext.Resources[Delete],
+                                        Source={x:Reference this}}"/>
                                 </ViewCell.ContextActions>
                                 <ViewCell.View>
                                     <Grid Padding="15">
@@ -74,7 +75,7 @@
                 </ListView>
 
                 <Label IsVisible="{Binding IsLabelVisible}"
-                       Text="{x:Static resource:Resource.NoProfilesText}"
+                       Text="{Binding Resources[NoProfilesText]}"
                        VerticalOptions="CenterAndExpand"
                        HorizontalOptions="CenterAndExpand"/>
             </StackLayout>

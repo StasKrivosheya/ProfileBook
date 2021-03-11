@@ -1,12 +1,17 @@
 ﻿using System.ComponentModel;
 using Prism.Navigation;
+using ProfileBook.Helpers.Localization;
 using ProfileBook.Resources;
+using ProfileBook.Services.Settings;
+using Xamarin.Forms;
 
 namespace ProfileBook.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
         #region --- Private Fields ---
+
+        private readonly ISettingsManager _settingsManager;
 
         private bool _isSortByName;
         private bool _isSortByNickName;
@@ -20,10 +25,30 @@ namespace ProfileBook.ViewModels
 
         #region --- Constructors ---
 
-        public SettingsPageViewModel(INavigationService navigationService) :
+        public SettingsPageViewModel(INavigationService navigationService,
+            ISettingsManager settingsManager) :
             base(navigationService)
         {
-            Title = Resource.Settings;
+            _settingsManager = settingsManager;
+
+            IsDarkTheme = _settingsManager.RememberedIsDarkTheme;
+
+            if (!string.IsNullOrEmpty(_settingsManager.RememberedSelectedLanguage))
+            {
+                SelectedLanguage = _settingsManager.RememberedSelectedLanguage;
+            }
+            else
+            {
+                switch (LocalizedResources.GetCurrentLanguageCode)
+                {
+                    case "en":
+                        SelectedLanguage = "English";
+                        break;
+                    case "ru":
+                        SelectedLanguage = "Russian";
+                        break;
+                }
+            }
         }
 
         #endregion
@@ -57,7 +82,21 @@ namespace ProfileBook.ViewModels
         public string SelectedLanguage
         {
             get => _selectedLanguage;
-            set => SetProperty(ref _selectedLanguage, value);
+            set
+            {
+                SetProperty(ref _selectedLanguage, value);
+                string langСode = null;
+                switch (value)
+                {
+                    case "English":
+                        langСode = "en";
+                        break;
+                    case "Russian":
+                        langСode = "ru";
+                        break;
+                }
+                MessagingCenter.Send<object, CultureChangedMessage>(this, string.Empty, new CultureChangedMessage(langСode));
+            }
         }
 
         #endregion
@@ -68,22 +107,34 @@ namespace ProfileBook.ViewModels
         {
             base.OnPropertyChanged(args);
 
+            // setting default sort
+            if (IsSortByName == false &&
+                IsSortByNickName == false &&
+                IsSortByDate == false)
+            {
+                IsSortByDate = true;
+            }
+
+            // if page haven't been init yet
+            if (_settingsManager == null)
+                return;
+
             switch (args.PropertyName)
             {
                 case nameof(IsSortByName):
-                    
+                    _settingsManager.RememberedIsSortByName = IsSortByName;
                     break;
                 case nameof(IsSortByNickName):
-                    
+                    _settingsManager.RememberedIsSortByNickName = IsSortByNickName;
                     break;
                 case nameof(IsSortByDate):
-                    
+                    _settingsManager.RememberedIsSortByDate = IsSortByDate;
                     break;
                 case nameof(IsDarkTheme):
-
+                    _settingsManager.RememberedIsDarkTheme = IsDarkTheme;
                     break;
                 case nameof(SelectedLanguage):
-
+                    _settingsManager.RememberedSelectedLanguage = SelectedLanguage;
                     break;
             }
         }

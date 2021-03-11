@@ -39,8 +39,6 @@ namespace ProfileBook.ViewModels
             IProfileService profileService) :
             base(navigationService)
         {
-            Title = Resource.ListViewTitle;
-
             _authorizationService = authorizationService;
 
             _profileService = profileService;
@@ -134,9 +132,9 @@ namespace ProfileBook.ViewModels
         {
             ConfirmConfig config = new ConfirmConfig
             { 
-                Message = $"{Resource.ProfileDeletionConfirm} {profile.NickName}?",
-                CancelText = Resource.CancelText,
-                OkText = Resource.YesText
+                Message = $"{Resources[nameof(Resource.ProfileDeletionConfirm)]} {profile.NickName}?",
+                CancelText = Resources[nameof(Resource.CancelText)],
+                OkText = Resources[nameof(Resource.YesText)]
             };
 
             var shouldDelete = await UserDialogs.Instance.ConfirmAsync(config);

@@ -31,7 +31,7 @@ namespace ProfileBook.ViewModels
             IUserService userService) :
             base(navigationService)
         {
-            Title = Resource.SignUpTitle;
+            Title = Resources[nameof(Resource.SignUpTitle)];
 
             _userService = userService;
         }
@@ -101,13 +101,15 @@ namespace ProfileBook.ViewModels
 
                 if (!loginValid)
                 {
-                    UserDialogs.Instance.Alert(Resource.InvalidLoginMessage,
-                        Resource.InvalidLoginTitle, Resource.OkText);
+                    UserDialogs.Instance.Alert(Resources[nameof(Resource.InvalidLoginMessage)],
+                        Resources[nameof(Resource.InvalidLoginTitle)],
+                        Resources[nameof(Resource.OkText)]);
                 }
                 else if (!passwordValid)
                 {
-                    UserDialogs.Instance.Alert(Resource.InvalidPasswordMessage,
-                        Resource.InvalidPasswordTitle, Resource.OkText);
+                    UserDialogs.Instance.Alert(Resources[nameof(Resource.InvalidPasswordMessage)],
+                        Resources[nameof(Resource.InvalidPasswordTitle)],
+                        Resources[nameof(Resource.OkText)]);
                 }
                 else
                 {
@@ -121,8 +123,9 @@ namespace ProfileBook.ViewModels
 
                     if (result == -1)
                     {
-                        UserDialogs.Instance.Alert(Resource.RegisterFailedMessage,
-                            Resource.RegisterFailedTitle, Resource.OkText);
+                        UserDialogs.Instance.Alert(Resources[nameof(Resource.RegisterFailedMessage)],
+                            Resources[nameof(Resource.RegisterFailedTitle)],
+                            Resources[nameof(Resource.OkText)]);
                     }
                     else
                     {
@@ -133,8 +136,9 @@ namespace ProfileBook.ViewModels
             }
             else
             {
-                UserDialogs.Instance.Alert(Resource.DifferentPasswordError,
-                    Resource.DifferentPasswordError, Resource.OkText);
+                UserDialogs.Instance.Alert(Resources[nameof(Resource.DifferentPasswordError)],
+                    Resources[nameof(Resource.DifferentPasswordError)],
+                    Resources[nameof(Resource.OkText)]);
             }
         }
 

@@ -136,7 +136,7 @@
     <value>Камера</value>
   </data>
   <data name="CancelText" xml:space="preserve">
-    <value>Отменна</value>
+    <value>Отмена</value>
   </data>
   <data name="ChooseFrom" xml:space="preserve">
     <value>Выберите из следующих</value>
@@ -240,7 +240,7 @@
     <value>Зарегистрироваться</value>
   </data>
   <data name="SignUpLink" xml:space="preserve">
-    <value>Регистрация</value>
+    <value>РЕГИСТРАЦИЯ</value>
   </data>
   <data name="SignUpTitle" xml:space="preserve">
     <value>Регистрация</value>

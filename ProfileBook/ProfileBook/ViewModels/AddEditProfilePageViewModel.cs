@@ -104,13 +104,13 @@ namespace ProfileBook.ViewModels
                 Description = profile?.Description;
                 InsertionTime = profile?.InsertionTime ?? DateTime.Now;
 
-                Title = Resource.EditProfileTitle;
+                Title = Resources[nameof(Resource.EditProfileTitle)];
             }
             else
             {
                 ProfileImagePath = Constants.DEFAULT_PROFILE_PIC;
 
-                Title = Resource.AddProfileTitle;
+                Title = Resources[nameof(Resource.AddProfileTitle)];
             }
         }
 
@@ -147,16 +147,16 @@ namespace ProfileBook.ViewModels
             }
             else
             {
-                await UserDialogs.Instance.AlertAsync(Resource.AddEditAlert);
+                await UserDialogs.Instance.AlertAsync(Resources[nameof(Resource.AddEditAlert)]);
             }
         }
 
         private void ExecuteImageTapCommand()
         {
             UserDialogs.Instance.ActionSheet(new ActionSheetConfig()
-                .SetTitle(Resource.ChooseFrom)
-                .Add(Resource.Camera, PickFromCamera, "ic_camera_alt_black.png")
-                .Add(Resource.Gallery, PickFromGallery, "ic_collections_black.png")
+                .SetTitle(Resources[nameof(Resource.ChooseFrom)])
+                .Add(Resources[nameof(Resource.Camera)], PickFromCamera, "ic_camera_alt_black.png")
+                .Add(Resources[nameof(Resource.Gallery)], PickFromGallery, "ic_collections_black.png")
             );
         }
 

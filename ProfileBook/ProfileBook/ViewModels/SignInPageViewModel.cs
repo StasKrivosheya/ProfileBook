@@ -34,7 +34,7 @@ namespace ProfileBook.ViewModels
             IAuthorizationService authorizationService) :
             base(navigationService)
         {
-            Title = Resource.SignInTitle;
+            Title = Resources[nameof(Resource.SignInTitle)];
 
             _userService = userService;
 
@@ -118,8 +118,9 @@ namespace ProfileBook.ViewModels
             }
             else
             {
-                await UserDialogs.Instance.AlertAsync(Resource.SignInErrorMessage,
-                    Resource.SignInErrorTitle, Resource.OkText);
+                await UserDialogs.Instance.AlertAsync(Resources[nameof(Resource.SignInErrorMessage)],
+                    Resources[nameof(Resource.SignInErrorTitle)],
+                    Resources[nameof(Resource.OkText)]);
                 Password = string.Empty;
             }
         }

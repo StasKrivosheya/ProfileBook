@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
-             xmlns:resource="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ProfileBook.Views.SignInPage"
              Title="{Binding Title}">
@@ -10,22 +9,22 @@
     <StackLayout Padding="40">
         <StackLayout VerticalOptions="CenterAndExpand">
             <Entry Text="{Binding Login}"
-                   Placeholder="{x:Static resource:Resource.LoginPlaceholder}" />
+                   Placeholder="{Binding Resources[LoginPlaceholder]}" />
             <Entry Text="{Binding Password}"
-                   Placeholder="{x:Static resource:Resource.PasswordPlaceholder}"
+                   Placeholder="{Binding Resources[PasswordPlaceholder]}"
                    IsPassword="True" />
         </StackLayout>
         <StackLayout VerticalOptions="CenterAndExpand">
             <Button Command="{Binding SignInCommand}"
                     IsEnabled="{Binding IsButtonEnabled}"
-                    Text="{x:Static resource:Resource.SignInButton}"
+                    Text="{Binding Resources[SignInButton]}"
                     BackgroundColor="DarkOrange"
                     BorderColor="Black"
                     BorderWidth="1"
             />
             <Label HorizontalOptions="CenterAndExpand"
                    Margin="10"
-                   Text="{x:Static resource:Resource.SignUpLink}"
+                   Text="{Binding Resources[SignUpLink]}"
                    TextDecorations="Underline"
                    TextColor="Blue">
                 <Label.GestureRecognizers>

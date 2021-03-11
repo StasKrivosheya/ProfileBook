@@ -2,14 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
-             xmlns:resource="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ProfileBook.Views.AddEditProfilePage"
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding SaveCommand}"
-                     Text="{x:Static resource:Resource.Save}"
+                     Text="{Binding Resources[Save]}"
                      IconImageSource="ic_save.png"
                      Order="Primary"/>
     </ContentPage.ToolbarItems>
@@ -36,15 +35,15 @@
                          Padding="40, 10">
 
                 <Entry Text="{Binding NickName}"
-                       Placeholder="{x:Static resource:Resource.NickNamePlaceholder}"/>
+                       Placeholder="{Binding Resources[NickNamePlaceholder]}"/>
                 <Entry Text="{Binding Name}"
-                       Placeholder="{x:Static resource:Resource.NamePlaceholder}"/>
+                       Placeholder="{Binding Resources[NamePlaceholder]}"/>
             </StackLayout>
 
             <StackLayout Grid.Row="2"
                          Padding="40, 30">
                 <Editor Text="{Binding Description}"
-                        Placeholder="{x:Static resource:Resource.DescriptionPlaceholder}"
+                        Placeholder="{Binding Resources[DescriptionPlaceholder]}"
                         VerticalOptions="FillAndExpand"
                         BackgroundColor="#EAEAEA"
                         MaxLength="120"/>
