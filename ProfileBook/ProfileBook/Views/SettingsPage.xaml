@@ -4,6 +4,7 @@
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ProfileBook.Views.SettingsPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
              Title="{Binding Resources[Settings]}">
     <Grid Padding="25" RowSpacing="25">
         <Grid.RowDefinitions>
@@ -15,30 +16,37 @@
         <StackLayout Grid.Row="0"
                      RadioButtonGroup.GroupName="sort">
             <Label Text="{Binding Resources[SortTitle]}"
-                    FontSize="Title"/>
+                   FontSize="Title"
+                   Style="{StaticResource LabelStyle}"/>
 
             <RadioButton Content="{Binding Resources[ByName]}"
-                         IsChecked="{Binding IsSortByName}"/>
+                         IsChecked="{Binding IsSortByName}"
+                         Style="{StaticResource RadioButtonStyle}"/>
 
             <RadioButton Content="{Binding Resources[ByNickName]}"
-                         IsChecked="{Binding IsSortByNickName}"/>
+                         IsChecked="{Binding IsSortByNickName}"
+                         Style="{StaticResource RadioButtonStyle}"/>
 
             <RadioButton Content="{Binding Resources[ByDate]}"
-                         IsChecked="{Binding IsSortByDate}"/>
+                         IsChecked="{Binding IsSortByDate}"
+                         Style="{StaticResource RadioButtonStyle}"/>
 
         </StackLayout>
 
         <StackLayout Grid.Row="1">
             <Label Text="{Binding Resources[DarkThemeTitle]}"
-                   FontSize="Title"/>
+                   FontSize="Title"
+                   Style="{StaticResource LabelStyle}"/>
             <CheckBox IsChecked="{Binding IsDarkTheme}"/>
         </StackLayout>
 
         <StackLayout Grid.Row="2">
             <Label Text="{Binding Resources[LanguageTitle]}"
-                   FontSize="Title"/>
+                   FontSize="Title"
+                   Style="{StaticResource LabelStyle}"/>
 
-            <Picker SelectedItem="{Binding SelectedLanguage}">
+            <Picker SelectedItem="{Binding SelectedLanguage}"
+                    Style="{StaticResource PickerStyle}">
                 <Picker.Items>
                     <x:String>English</x:String>
                     <x:String>Russian</x:String>

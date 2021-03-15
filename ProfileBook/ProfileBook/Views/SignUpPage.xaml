@@ -4,19 +4,23 @@
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ProfileBook.Views.SignUpPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
              Title="{Binding Title}">
 
     <StackLayout Padding="40">
         <StackLayout VerticalOptions="CenterAndExpand">
             <Entry Text="{Binding Login}"
-                   Placeholder="{Binding Resources[LoginPlaceholder]}" />
+                   Placeholder="{Binding Resources[LoginPlaceholder]}"
+                   Style="{StaticResource EntryStyle}"/>
 
             <Entry Text="{Binding Password}"
                    Placeholder="{Binding Resources[PasswordPlaceholder]}"
+                   Style="{StaticResource EntryStyle}"
                    IsPassword="True" />
 
             <Entry Text="{Binding ConfirmPassword}"
                    Placeholder="{Binding Resources[ConfirmPasswordPlaceholder]}"
+                   Style="{StaticResource EntryStyle}"
                    IsPassword="True" />
         </StackLayout>
         <StackLayout VerticalOptions="CenterAndExpand">
@@ -25,7 +29,8 @@
                     Text="{Binding Resources[SignUpButton]}"
                     BackgroundColor="DarkOrange"
                     BorderColor="Black"
-                    BorderWidth="1" />
+                    BorderWidth="1"
+                    Style="{StaticResource ButtonStyle}"/>
         </StackLayout>
     </StackLayout>
 </ContentPage>

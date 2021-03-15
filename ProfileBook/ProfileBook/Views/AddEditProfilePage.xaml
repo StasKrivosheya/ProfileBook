@@ -4,6 +4,7 @@
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ProfileBook.Views.AddEditProfilePage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
@@ -35,9 +36,11 @@
                          Padding="40, 10">
 
                 <Entry Text="{Binding NickName}"
-                       Placeholder="{Binding Resources[NickNamePlaceholder]}"/>
+                       Placeholder="{Binding Resources[NickNamePlaceholder]}"
+                       Style="{StaticResource EntryStyle}"/>
                 <Entry Text="{Binding Name}"
-                       Placeholder="{Binding Resources[NamePlaceholder]}"/>
+                       Placeholder="{Binding Resources[NamePlaceholder]}"
+                       Style="{StaticResource EntryStyle}"/>
             </StackLayout>
 
             <StackLayout Grid.Row="2"
@@ -45,8 +48,8 @@
                 <Editor Text="{Binding Description}"
                         Placeholder="{Binding Resources[DescriptionPlaceholder]}"
                         VerticalOptions="FillAndExpand"
-                        BackgroundColor="#EAEAEA"
-                        MaxLength="120"/>
+                        MaxLength="120"
+                        Style="{StaticResource EditorStyle}"/>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

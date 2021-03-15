@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using Prism.Navigation;
 using ProfileBook.Helpers.Localization;
 
@@ -26,12 +24,6 @@ namespace ProfileBook.ViewModels
 
             Resources = new LocalizedResources(typeof(Resources.Resource));
         }
-
-        #endregion
-
-        #region --- Events ---
-
-        public new event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -79,15 +71,6 @@ namespace ProfileBook.ViewModels
         public virtual void Destroy()
         {
 
-        }
-
-        #endregion
-
-        #region --- Public Helpers ---
-
-        public void OnPropertyChanged([CallerMemberName] string property = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
 
         #endregion

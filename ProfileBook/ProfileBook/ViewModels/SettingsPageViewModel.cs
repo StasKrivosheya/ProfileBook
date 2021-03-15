@@ -1,8 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using Prism.Navigation;
 using ProfileBook.Helpers.Localization;
 using ProfileBook.Resources;
 using ProfileBook.Services.Settings;
+using ProfileBook.Themes;
 using Xamarin.Forms;
 
 namespace ProfileBook.ViewModels
@@ -132,6 +134,21 @@ namespace ProfileBook.ViewModels
                     break;
                 case nameof(IsDarkTheme):
                     _settingsManager.RememberedIsDarkTheme = IsDarkTheme;
+                    ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+                    if (mergedDictionaries != null)
+                    {
+                        mergedDictionaries.Clear();
+
+                        switch (IsDarkTheme)
+                        {
+                            case true:
+                                mergedDictionaries.Add(new DarkTheme());
+                                break;
+                            case false:
+                                mergedDictionaries.Add(new LightTheme());
+                                break;
+                        }
+                    }
                     break;
                 case nameof(SelectedLanguage):
                     _settingsManager.RememberedSelectedLanguage = SelectedLanguage;

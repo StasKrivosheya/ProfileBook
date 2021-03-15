@@ -5,11 +5,12 @@
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ProfileBook.Views.MainListPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
              Title="{Binding Resources[ListViewTitle]}"
              x:Name="this">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding LogOutCommand}"
+        <ToolbarItem Command="{Binding LogOutCommand}"                                     
                      Text="{Binding Resources[LogOutText]}"
                      IconImageSource="ic_exit_to_app.png"
                      Order="Primary"/>
@@ -62,10 +63,15 @@
                                         <StackLayout Grid.Column="1"
                                                      Margin="10, 0">
                                             <Label Text="{Binding NickName}"
-                                                   FontAttributes="Bold"/>
-                                            <Label Text="{Binding Name}"/>
+                                                   FontAttributes="Bold"
+                                                   Style="{StaticResource LabelStyle}"/>
+                                            <Label Text="{Binding Name}"
+                                                   TextColor="{x:DynamicResource PrimaryTextColor}"
+                                                   Style="{StaticResource LabelStyle}"/>
                                             <Label Text="{Binding InsertionTime}"
-                                                   FontAttributes="Italic"/>
+                                                   FontAttributes="Italic"
+                                                   TextColor="{x:DynamicResource PrimaryTextColor}"
+                                                   Style="{StaticResource LabelStyle}"/>
                                         </StackLayout>
                                     </Grid>
                                 </ViewCell.View>
@@ -77,7 +83,8 @@
                 <Label IsVisible="{Binding IsLabelVisible}"
                        Text="{Binding Resources[NoProfilesText]}"
                        VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="CenterAndExpand"/>
+                       HorizontalOptions="CenterAndExpand"
+                       Style="{StaticResource LabelStyle}"/>
             </StackLayout>
 
             <ImageButton Grid.Row="0"
