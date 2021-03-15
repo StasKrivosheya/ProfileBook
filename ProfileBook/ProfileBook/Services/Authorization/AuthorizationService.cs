@@ -13,7 +13,7 @@ namespace ProfileBook.Services.Authorization
 
         #region --- Interface Implementation ---
 
-        public bool IsAuthorized => _settingsManager.RememberedUserLogin != string.Empty;
+        public bool IsAuthorized => _settingsManager.RememberedUserLogin != default(string);
 
         public int CurrentUserId => IsAuthorized ? _settingsManager.RememberedUserId : -1;
 
