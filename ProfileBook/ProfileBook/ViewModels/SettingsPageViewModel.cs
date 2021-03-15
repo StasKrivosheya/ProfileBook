@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using Prism.Navigation;
 using ProfileBook.Helpers.Localization;
-using ProfileBook.Resources;
 using ProfileBook.Services.Settings;
 using ProfileBook.Themes;
 using Xamarin.Forms;
@@ -35,6 +34,19 @@ namespace ProfileBook.ViewModels
 
             IsDarkTheme = _settingsManager.RememberedIsDarkTheme;
 
+            IsSortByDate = _settingsManager.RememberedIsSortByDate;
+            IsSortByName = _settingsManager.RememberedIsSortByName;
+            IsSortByNickName = _settingsManager.RememberedIsSortByNickName;
+
+            // setting default sort
+            if (IsSortByName == false &&
+                IsSortByNickName == false &&
+                IsSortByDate == false)
+            {
+                IsSortByDate = true;
+            }
+
+            // setting necessary language to picker
             if (!string.IsNullOrEmpty(_settingsManager.RememberedSelectedLanguage))
             {
                 SelectedLanguage = _settingsManager.RememberedSelectedLanguage;
@@ -108,14 +120,6 @@ namespace ProfileBook.ViewModels
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
-
-            // setting default sort
-            if (IsSortByName == false &&
-                IsSortByNickName == false &&
-                IsSortByDate == false)
-            {
-                IsSortByDate = true;
-            }
 
             // if page haven't been init yet
             if (_settingsManager == null)

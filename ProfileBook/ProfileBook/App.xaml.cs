@@ -6,6 +6,7 @@ using ProfileBook.Services.Authorization;
 using ProfileBook.Services.ProfileService;
 using ProfileBook.Services.Repository;
 using ProfileBook.Services.Settings;
+using ProfileBook.Services.Sorting;
 using ProfileBook.Services.Theming;
 using ProfileBook.Services.UserService;
 using ProfileBook.Themes;
@@ -20,7 +21,7 @@ namespace ProfileBook
     public partial class App : PrismApplication
     {
         private IAuthorizationService _authorizationService;
-        private ITheming _themingManager;
+        private IThemingService _themingServiceManager;
 
         public App(IPlatformInitializer initializer)
             : base(initializer)
@@ -30,8 +31,8 @@ namespace ProfileBook
         private IAuthorizationService AuthorizationService =>
             _authorizationService ?? (_authorizationService = Container.Resolve<IAuthorizationService>());
 
-        private ITheming ThemingService => 
-        _themingManager ?? (_themingManager = Container.Resolve<ITheming>());
+        private IThemingService ThemingServiceService => 
+        _themingServiceManager ?? (_themingServiceManager = Container.Resolve<IThemingService>());
 
         #region --- Overrides ---
 
@@ -43,7 +44,7 @@ namespace ProfileBook
             ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
             if (mergedDictionaries != null)
             {
-                switch (ThemingService.IsDarkTheme)
+                switch (ThemingServiceService.IsDarkTheme)
                 {
                     case true:
                         mergedDictionaries.Add(new DarkTheme());
@@ -79,7 +80,8 @@ namespace ProfileBook
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<IUserService>(Container.Resolve<UserService>());
             containerRegistry.RegisterInstance<IProfileService>(Container.Resolve<ProfileService>());
-            containerRegistry.RegisterInstance<ITheming>(Container.Resolve<Theming>());
+            containerRegistry.RegisterInstance<IThemingService>(Container.Resolve<ThemingService>());
+            containerRegistry.RegisterInstance<ISortingService>(Container.Resolve<SortingService>());
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();

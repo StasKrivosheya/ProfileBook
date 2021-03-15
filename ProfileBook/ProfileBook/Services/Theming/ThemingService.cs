@@ -2,11 +2,11 @@
 
 namespace ProfileBook.Services.Theming
 {
-    class Theming : ITheming
+    class ThemingService : IThemingService
     {
         private readonly ISettingsManager _settingsManager;
 
-        public Theming(ISettingsManager settingsManager)
+        public ThemingService(ISettingsManager settingsManager)
         {
             _settingsManager = settingsManager;
         }

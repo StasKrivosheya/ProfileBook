@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms;
 using Prism.Commands;
@@ -7,8 +8,10 @@ using ProfileBook.Views;
 using ProfileBook.Models;
 using ProfileBook.Services.Authorization;
 using Acr.UserDialogs;
+using ProfileBook.Enums;
 using ProfileBook.Resources;
 using ProfileBook.Services.ProfileService;
+using ProfileBook.Services.Sorting;
 
 namespace ProfileBook.ViewModels
 {
@@ -18,6 +21,7 @@ namespace ProfileBook.ViewModels
 
         private readonly IAuthorizationService _authorizationService;
         private readonly IProfileService _profileService;
+        private readonly ISortingService _sortingService;
 
         private DelegateCommand _logOutCommand;
         private DelegateCommand _settingsTapCommand;
@@ -36,12 +40,15 @@ namespace ProfileBook.ViewModels
 
         public MainListPageViewModel(INavigationService navigationService,
             IAuthorizationService authorizationService,
-            IProfileService profileService) :
+            IProfileService profileService,
+            ISortingService sortingService) :
             base(navigationService)
         {
             _authorizationService = authorizationService;
 
             _profileService = profileService;
+
+            _sortingService = sortingService;
 
             EditCommand = new DelegateCommand<ProfileModel>(ExecuteEditCommand,
                 (arg) => arg != null);
@@ -155,6 +162,19 @@ namespace ProfileBook.ViewModels
         {
             var profiles = await _profileService.GetItemsAsync(
                 profile => profile.UserId == _authorizationService.CurrentUserId);
+
+            switch (_sortingService.GetCurrentSortType)
+            {
+                case SortTypes.ByName:
+                    profiles = profiles.OrderBy(profile => profile.Name).ToList();
+                    break;
+                case SortTypes.ByNickName:
+                    profiles = profiles.OrderBy(profile => profile.NickName).ToList();
+                    break;
+                case SortTypes.ByDate:
+                    profiles = profiles.OrderBy(profile => profile.InsertionTime).ToList();
+                    break;
+            }
 
             Profiles = new ObservableCollection<ProfileModel>(profiles);
 

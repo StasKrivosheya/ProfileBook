@@ -1,6 +1,6 @@
 ﻿namespace ProfileBook.Services.Theming
 {
-    interface ITheming
+    public interface IThemingService
     {
         bool IsDarkTheme { get; }
     }
