@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="ProfileBook.Views.SignInPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
+             Title="{Binding Title}">
+
+    <StackLayout Padding="40">
+        <StackLayout VerticalOptions="CenterAndExpand">
+            <Entry Text="{Binding Login}"
+                   Placeholder="{Binding Resources[LoginPlaceholder]}"
+                   Style="{StaticResource EntryStyle}"/>
+            <Entry Text="{Binding Password}"
+                   Placeholder="{Binding Resources[PasswordPlaceholder]}"
+                   Style="{StaticResource EntryStyle}"
+                   IsPassword="True" />
+        </StackLayout>
+        <StackLayout VerticalOptions="CenterAndExpand">
+            <Button Command="{Binding SignInCommand}"
+                    IsEnabled="{Binding IsButtonEnabled}"
+                    Text="{Binding Resources[SignInButton]}"
+                    BackgroundColor="DarkOrange"
+                    BorderColor="Black"
+                    BorderWidth="1"
+                    Style="{StaticResource ButtonStyle}"
+            />
+            <Label HorizontalOptions="CenterAndExpand"
+                   Margin="10"
+                   Text="{Binding Resources[SignUpLink]}"
+                   TextDecorations="Underline"
+                   TextColor="Blue"
+                   Style="{StaticResource LabelStyle}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>
