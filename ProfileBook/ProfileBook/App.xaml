@@ -3,11 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              x:Class="ProfileBook.App">
-  <Application.Resources>
+    <Application.Resources>
+        <!-- Application resource dictionary -->
 
-    <!-- Application resource dictionary -->
-    <ResourceDictionary Source="Themes/LightTheme.xaml" />
+        <!-- Default Theme -->
+        <ResourceDictionary Source="Themes/LightTheme.xaml" />
 
+        <!-- Styles consumed by multiple pages -->
         <Style TargetType="NavigationPage">
             <Setter Property="BarBackgroundColor"
                     Value="{DynamicResource NavigationBarColor}" />

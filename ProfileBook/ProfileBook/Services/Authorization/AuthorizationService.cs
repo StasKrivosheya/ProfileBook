@@ -4,14 +4,22 @@ namespace ProfileBook.Services.Authorization
 {
     public class AuthorizationService : IAuthorizationService
     {
+        #region --- Private Fields ---
+
         private readonly ISettingsManager _settingsManager;
+
+        #endregion
+
+        #region --- Constructors ---
 
         public AuthorizationService(ISettingsManager settingsManager)
         {
             _settingsManager = settingsManager;
         }
 
-        #region --- Interface Implementation ---
+        #endregion
+
+        #region --- IAuthorizationService Implementation ---
 
         public bool IsAuthorized => _settingsManager.RememberedUserLogin != default(string);
 

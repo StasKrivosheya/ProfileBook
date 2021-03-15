@@ -4,16 +4,16 @@ namespace ProfileBook.Validators
 {
     public class StringValidator
     {
-        #region --- Constants ---
+        #region --- Private Constants ---
 
         // accepts strings that has [4, 16] symbols and starts with non-digit
         private const string LOGIN_REGEX =
-            "^(?=.*[A-Za-zА-ЯЁа-яё0-9]$)[A-Za-zА-ЯЁа-яё][A-Za-zА-ЯЁа-яё\\d.-]{3,15}$";
+            @"^(?=.*[A-Za-zА-ЯЁа-яё0-9]$)[A-Za-zА-ЯЁа-яё][A-Za-zА-ЯЁа-яё\d._]{3,15}$";
 
         // accepts string with at least one lowercase, one uppercase and one digit,
         // total length is from 8 to 16
         private const string PASSWORD_REGEX =
-            "^(?=.*\\d)(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ]).{8,16}$";
+            @"^(?=.*\d)(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ]).{8,16}$";
 
         #endregion
 

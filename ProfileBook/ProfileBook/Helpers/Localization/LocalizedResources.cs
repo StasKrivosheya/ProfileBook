@@ -22,7 +22,6 @@ namespace ProfileBook.Helpers.Localization
 
         private LocalizedResources(Type resource, CultureInfo cultureInfo)
         {
-            //_currentCultureInfo = cultureInfo;
             CurrentCultureInfo = cultureInfo;
             _resourceManager = new ResourceManager(resource);
 
@@ -33,7 +32,6 @@ namespace ProfileBook.Helpers.Localization
         public LocalizedResources(Type resource)
             : this(resource, new CultureInfo(GetCurrentLanguageCode))
         {
-
         }
 
         #endregion
@@ -95,12 +93,20 @@ namespace ProfileBook.Helpers.Localization
 
         #endregion
 
+        #region --- Indexer ---
+
         public string this[string key] => _resourceManager.GetString(key, _currentCultureInfo);
+
+        #endregion
+
+        #region --- Private Helpers ---
 
         private void OnCultureChanged(object s, CultureChangedMessage ccm)
         {
             _currentCultureInfo = ccm.NewCultureInfo;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Item"));
         }
+
+        #endregion
     }
 }

@@ -9,7 +9,13 @@ namespace ProfileBook.Services.UserService
 {
     public class UserService : IUserService
     {
+        #region --- Private Fields ---
+
         private readonly IRepository _repository;
+
+        #endregion
+
+        #region --- Constructors ---
 
         public UserService(IRepository repository)
         {
@@ -18,7 +24,9 @@ namespace ProfileBook.Services.UserService
             _repository.CreateTableAsync<UserModel>();
         }
 
-        #region --- Interface Implementation ---
+        #endregion
+
+        #region --- IUserService Implementation ---
 
         public Task<List<UserModel>> GetItemsAsync()
         {

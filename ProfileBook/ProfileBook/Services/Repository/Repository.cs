@@ -10,7 +10,13 @@ namespace ProfileBook.Services.Repository
 {
     public class Repository : IRepository
     {
+        #region --- Private Fields ---
+
         private readonly SQLiteAsyncConnection _database;
+
+        #endregion
+
+        #region --- Constructors ---
 
         public Repository()
         {
@@ -18,7 +24,9 @@ namespace ProfileBook.Services.Repository
                 Path.Combine(Constants.DatabasePath, Constants.DATABASE_NAME));
         }
 
-        #region --- Interface Implementation ---
+        #endregion
+
+        #region --- IRepository Implementation ---
 
         public Task CreateTableAsync<T>() where T : IEntityBase, new()
         {

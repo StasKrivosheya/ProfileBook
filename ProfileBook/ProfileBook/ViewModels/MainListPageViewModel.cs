@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
@@ -76,7 +75,6 @@ namespace ProfileBook.ViewModels
 
         public DelegateCommand<ProfileModel> DeleteCommand { get; private set; }
 
-        //public DelegateCommand<ProfileModel> ProfileTapCommand { get; private set; }
         public ICommand ProfileTapCommand => new Command<ProfileModel>(ExecuteProfileTapCommand);
 
         public ObservableCollection<ProfileModel> Profiles

@@ -9,7 +9,13 @@ namespace ProfileBook.Services.ProfileService
 {
     public class ProfileService : IProfileService
     {
+        #region --- Private Fields ---
+
         private readonly IRepository _repository;
+
+        #endregion
+
+        #region --- Constructors ---
 
         public ProfileService(IRepository repository)
         {
@@ -18,7 +24,9 @@ namespace ProfileBook.Services.ProfileService
             _repository.CreateTableAsync<ProfileModel>();
         }
 
-        #region --- Interface Implementation ---
+        #endregion
+
+        #region --- IProfileService Implementation ---
 
         public Task<List<ProfileModel>> GetItemsAsync()
         {
