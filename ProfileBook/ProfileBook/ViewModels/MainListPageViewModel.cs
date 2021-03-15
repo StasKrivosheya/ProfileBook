@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Prism.Commands;
 using Prism.Navigation;
@@ -74,6 +76,9 @@ namespace ProfileBook.ViewModels
 
         public DelegateCommand<ProfileModel> DeleteCommand { get; private set; }
 
+        //public DelegateCommand<ProfileModel> ProfileTapCommand { get; private set; }
+        public ICommand ProfileTapCommand => new Command<ProfileModel>(ExecuteProfileTapCommand);
+
         public ObservableCollection<ProfileModel> Profiles
         {
             get => _profiles;
@@ -105,6 +110,16 @@ namespace ProfileBook.ViewModels
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             UpdateList();
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            if (args.PropertyName == nameof(SelectedProfile))
+            {
+                ProfileTapCommand.Execute(SelectedProfile);
+            }
         }
 
         #endregion
@@ -152,6 +167,14 @@ namespace ProfileBook.ViewModels
 
                 UpdateList();
             }
+        }
+
+        private async void ExecuteProfileTapCommand(ProfileModel profile)
+        {
+            var parameters = new NavigationParameters();
+            parameters.Add(nameof(profile.ProfileImagePath), profile.ProfileImagePath);
+
+            await NavigationService.NavigateAsync(nameof(ImageModalPage), parameters);
         }
 
         #endregion

@@ -90,6 +90,7 @@ namespace ProfileBook
             containerRegistry.RegisterForNavigation<MainListPage, MainListPageViewModel>();
             containerRegistry.RegisterForNavigation<AddEditProfilePage, AddEditProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>();
+            containerRegistry.RegisterForNavigation<ImageModalPage, ImageModalPageViewModel>();
         }
 
         #endregion
